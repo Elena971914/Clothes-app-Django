@@ -31,6 +31,9 @@ class Cloth(models.Model):
     name = models.CharField(
         max_length=100
     )
+    price = models.IntegerField(
+
+    )
     color = models.CharField(
         max_length=20
     )

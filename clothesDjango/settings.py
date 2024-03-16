@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'clothesDjango.common',
-    'clothesDjango.catalogue'
+    'clothesDjango.catalogue',
+    'clothesDjango.accounts'
 ]
 
 MIDDLEWARE = [
