@@ -1,3 +1,4 @@
+from django.core.validators import MinLengthValidator
 from django.db import models
 
 
@@ -6,7 +7,8 @@ class Testimonial(models.Model):
         max_length=50)
     text = models.TextField(
         blank=False,
-        null=False
+        null=False,
+        validators=[MinLengthValidator(5)]
     )
     date_time = models.DateTimeField(
         auto_now=True,
