@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/newsletter.css' %}">
+{% endblock %}
+
+{% block content%}
+{% for obj in all_subscribed %}
+    <p>{{ obj.subscribed }}</p>
+{% endfor %}
+
+<div class="wrapper">
+    <div class="container">
+      <div class="content">
+        <h1>Thank You for Your Subscription</h1>
+        <p>We are happy to give you heads up for promotions and special offers.</p>
+        <p>On this email <small class="email">{{ email }}</small> you will be the first to know what is coming soon.</p>
+      </div>
+      <div class="button-container">
+        <button class="unsubscribe-btn">Stop Subscription</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

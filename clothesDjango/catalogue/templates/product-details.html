@@ -1,9 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ cloth.name }}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/product-details.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<p>TODO : product-details page</p>
+<h1 class="name">{{ cloth.type }}</h1>
 
-{{ cloth.name }}
+    <div class="product-details-container">
+        <div class="product-images">
+            <div class="image-grid">
+                <img src="product-image-1.jpg" alt="Product Image 1">
+                <img src="product-image-2.jpg" alt="Product Image 2">
+                <img src="product-image-3.jpg" alt="Product Image 3">
+                <img src="product-image-4.jpg" alt="Product Image 4">
+                <img src="product-image-5.jpg" alt="Product Image 5">
+            </div>
+        </div>
+        <div class="product-info">
+            <h2 class="product-name">{{ cloth.name }}</h2>
+            {% if cloth.description %}
+            <p class="product-description">{{ cloth.description }}</p>
+            {% endif %}
+            {% if cloth.size %}
+            <p class="product-description">Size: {{ cloth.size }}</p>
+            {% endif %}
+            <p class="product-description">Color: {{ cloth.color }}</p>
+            <p class="product-size">Available sizes: <select class="size-dropdown">
+                {% if cloth.stocked_S %}
+                <option value="s">S</option>
+                {% endif %}
+                {% if cloth.stocked_M %}
+                <option value="s">M</option>
+                {% endif %}
+                {% if cloth.stocked_L %}
+                <option value="s">L</option>
+                {% endif %}
+            </select></p>
+            <button class="add-to-cart-button">Add to Cart</button>
+            <button class="like-button">Like</button>
+            <div class="container">
+                <div class="info-line">
+                  <span class="icon">&#128073;</span>
+                  <p>Expect your product to arrive in 3-5 working days.</p>
+                </div>
+                <div class="info-line">
+                  <span class="icon">&#127968;</span>
+                  <p>You get free delivery to your home or courier office of your choice.</p>
+                </div>
+                <div class="info-line">
+                  <span class="icon">&#128197;</span>
+                  <p>You can return the product in the next 100 days for free.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="suggestions">
+    <h2>Similar Items you might like</h2>
+    <div class="similar-items">
+     <div class="item">
+        <img src="similar-item1.jpg" alt="Similar Item 1">
+        <p>Similar Item 1</p>
+        <p class="price">$79.99</p>
+      </div>
+    <div class="item">
+        <img src="similar-item2.jpg" alt="Similar Item 2">
+        <p>Similar Item 2</p>
+        <p class="price">$89.99</p>
+      </div>
+    </div>
+    </div>
 
 {% endblock %}

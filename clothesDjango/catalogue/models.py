@@ -33,10 +33,22 @@ class Cloth(models.Model):
     name = models.CharField(
         max_length=100
     )
+    description = models.TextField(
+        null=True,
+        blank=True
+    )
     price = models.IntegerField(
     )
     color = models.CharField(
         max_length=20
+    )
+    material = models.CharField(
+        max_length=20,
+        null=True
+    )
+    size = models.CharField(
+        max_length=100,
+        null=True
     )
     stocked_S = models.PositiveIntegerField(
         default=0

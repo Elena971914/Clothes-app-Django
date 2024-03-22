@@ -27,17 +27,56 @@ class User(models.Model):
         null=False,
         blank=False,
     )
-    orders = models.ManyToManyField(
-        Cloth,
-        through='Ordered'
-    )
-
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
 
-class Ordered(models.Model):
-    purchases = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    purchased = models.ForeignKey(Cloth, on_delete=models.SET_NULL, null=True)
-    date_of_purchase = models.DateField(auto_now=True)
+class Order(models.Model):
+    to_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    to_cloth = models.ForeignKey(
+        Cloth,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+        )
+    date_of_purchase = models.DateField(
+        auto_now=True,
+        null=True,
+        blank=True
+    )
+
+
+class Like(models.Model):
+    to_cloth = models.ForeignKey(
+        Cloth,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    to_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+
+class Cart(models.Model):
+    to_cloth = models.ForeignKey(
+        Cloth,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    to_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )

@@ -18,6 +18,8 @@
       {% block title %}{% endblock %}
   </title>
 
+    {% block style %}{% endblock %}
+
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css' %}" />
 
@@ -128,12 +130,11 @@
               <h5>
                 Newsletter
               </h5>
-              <form action="#">
-                <input type="email" placeholder="Enter your email">
-                <button>
-                  Subscribe
-                </button>
-              </form>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ newsletter_form }}
+                    <button type="submit">Subscribe</button>
+                </form>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
