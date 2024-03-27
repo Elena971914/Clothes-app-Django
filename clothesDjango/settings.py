@@ -29,7 +29,8 @@ INSTALLED_APPS = [
 
     'clothesDjango.common',
     'clothesDjango.catalogue',
-    'clothesDjango.accounts'
+    'clothesDjango.accounts',
+    'clothesDjango.orders'
 ]
 
 MIDDLEWARE = [
@@ -114,8 +115,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'clothesDjango', 'static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+MEDIA_ROOT = BASE_DIR / 'media_files'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

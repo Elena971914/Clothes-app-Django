@@ -1,0 +1,31 @@
+.testimonial-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:40px auto;
+    width: 40vw;
+    color: #564f4f
+}
+
+.testimonial-form p {width: 100%}
+.testimonial-form input,
+.testimonial-form textarea {
+    width: 100%; /* Set all input fields and textareas to 100% width */
+    margin-bottom: 10px; /* Add some spacing between fields */
+}
+
+.testimonial-form button {
+    background-color: #db4f66; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add transition effect */
+}
+
+.testimonial-form button:hover {
+    background-color: #d97485; /* Change background color on hover */
+}
+
+

@@ -6,6 +6,21 @@ body {
   background-color: #ffffff;
 }
 
+.button-footer {
+    background-color: #db4f66; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s; /* Add transition effect */
+}
+
+.button-footer:hover {
+    background-color: #d97485; /* Change background color on hover */
+}
+
 .layout_padding {
   padding-top: 90px;
   padding-bottom: 90px;

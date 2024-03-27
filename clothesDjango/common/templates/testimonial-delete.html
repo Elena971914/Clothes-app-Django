@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Yell testimonials{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 40vh; margin-top: 40vh; transform: translateY(-30%); background-color: #f8f9fa; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <h1>You successfully deleted your testimonial.</h1>
+        <div class="buttons-position" style="{{ 'text-align:center' }}">
+            <a href="{% url 'index' %}" class="button-link" title="Edit">
+                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                    Go to home page
+                </button>
+            </a>
+            <a href="{% url 'shop' %}" class="button-link" title="Delete">
+                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                    Shop!
+                </button>
+            </a>
+            <a href="{% url 'testimonials' %}" class="button-link" title="Delete">
+                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                    Return to testimonials
+                </button>
+            </a>
+        </div>
+    </div>
+
+
+{% endblock %}

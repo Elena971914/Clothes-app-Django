@@ -5,21 +5,28 @@
     <link rel="stylesheet" href="{% static 'css/newsletter.css' %}">
 {% endblock %}
 
-{% block content%}
-{% for obj in all_subscribed %}
-    <p>{{ obj.subscribed }}</p>
-{% endfor %}
+{% block title %}
+    Successfully subscribed!
+{% endblock %}
 
-<div class="wrapper">
-    <div class="container">
+{% block content%}
+
+<div class="wrapper-news">
+    {% if not email == 'None' %}
+    <div class="container-news">
       <div class="content">
         <h1>Thank You for Your Subscription</h1>
         <p>We are happy to give you heads up for promotions and special offers.</p>
         <p>On this email <small class="email">{{ email }}</small> you will be the first to know what is coming soon.</p>
       </div>
       <div class="button-container">
-        <button class="unsubscribe-btn">Stop Subscription</button>
+        <button class="unsubscribe-btn"><a href="{% url 'stop subscription' email %}" style="{{ 'color:white' }}">Stop Subscription</a></button>
       </div>
     </div>
   </div>
+    {% else %}
+        <div class="container-news">
+            This email has already been subscribed, please <a href="{% url 'add newsletter user' %}" style="{{ 'color:white' }}">return</a> and enter another.
+        </div>
+    {% endif %}
 {% endblock %}

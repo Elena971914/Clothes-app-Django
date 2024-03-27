@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Yell testimonials{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form class="testimonial-form" method="post" enctype="multipart/form-data">
+        {{ testimonial_edit_form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Edit!</button>
+    </form>
+
+{% endblock %}

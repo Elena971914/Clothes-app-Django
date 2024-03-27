@@ -1,7 +1,8 @@
 from django.urls import path, include
 
 from clothesDjango.common.views import index, show_why, show_contacts, show_testimonials, \
-    add_testimonial, edit_testimonial, delete_testimonial, add_newsletter_user
+    edit_testimonial, delete_testimonial, add_newsletter_user, thank_you_newsletter, \
+    stop_newsletter_subscription
 
 urlpatterns = [
     path('', index, name='index'),
@@ -9,10 +10,12 @@ urlpatterns = [
     path('contacts/', show_contacts, name='contacts'),
     path('testimonials/', include([
         path('', show_testimonials, name='testimonials'),
-        path('add/', add_testimonial, name='add testimonial'),
         path('<int:pk>/edit', edit_testimonial, name='edit testimonial'),
         path('<int:pk>/delete', delete_testimonial, name='delete testimonial'),
         ])),
-    path('newsletter/<email>', add_newsletter_user, name='add newsletter user')
-
+    path('newsletter/', include([
+        path('', add_newsletter_user, name='add newsletter user'),
+        path('<email>', thank_you_newsletter, name='thank you newsletter'),
+        path('<email>/stop', stop_newsletter_subscription, name='stop subscription')
+    ]))
 ]

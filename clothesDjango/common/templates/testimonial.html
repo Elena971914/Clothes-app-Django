@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Yell testimonials{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <button id="toggleFormBtn" type="button" style="display: block; margin: 30px auto; color: #d7677a; transition: all 0.3s ease; border: 2px solid #d36f80; background-color: white; border-radius: 20px; padding: 12px 24px;" onmouseover="this.style.backgroundColor='#d97585'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+    Show testimonial form
+    </button>
+
+    <form id="testimonialForm" class="testimonial-form" method="post" enctype="multipart/form-data" style="display: none;">
+        {{ testimonial_form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Send!</button>
+    </form>
+
+  <!-- all testimonials -->
+
+  <section class="client_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Testimonial
+        </h2>
+      </div>
+    </div>
+    <div class="container px-0">
+      <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for testimonial in all_testimonials %}
+          <div class="carousel-item {% if forloop.last %}active{% endif %}">
+            <div class="box">
+              <div class="client_info">
+                <div class="client_name">
+                  <h5>
+                      {{ testimonial.author }}
+                  </h5>
+                  <h6>
+                      {{ testimonial.date_time }}
+                  </h6>
+                    <h6 class="stars">
+                        {% for _ in "12345" %}
+                            <span class="fa fa-star" style="color:
+                                    {% if forloop.counter <= testimonial.rating %}
+                                        orange{% else %}gray{% endif %}"></span>
+                        {% endfor %}
+                      {{ testimonial.rating }}
+                  </h6>
+                </div>
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+              </div>
+              <p>
+                  {{ testimonial.text }}
+              </p>
+                <div style="text-align: center;">
+                    {% if testimonial.photo %}
+                        <img src="{{ testimonial.photo.url }}" alt="Testimonial Photo" style="display: inline-block;">
+                    {% endif %}
+                </div>
+                <div class="buttons-position" style="{{ 'text-align:center' }}">
+                    <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
+                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                    </a>
+                    <a href="{% url 'delete testimonial' testimonial.pk %}" class="button-link" title="Delete">
+                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                            <i class="fa fa-trash"></i> Delete
+                        </button>
+                    </a>
+                </div>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+
+{#<div class="carousel_btn-box">#}
+{#{% if page_obj.has_previous %}#}
+{#    <a class="carousel-control-prev" href="{% url 'testimonials' %}?page={{ page_obj.previous_page_number }}" role="button">#}
+{#        <i class="fa fa-angle-left" aria-hidden="true"></i>#}
+{#        <span class="sr-only">Previous</span>#}
+{#    </a>#}
+{#{% endif %}#}
+{#{% if page_obj.has_next %}#}
+{#    <a class="carousel-control-next" href="{% url 'testimonials' %}?page={{ page_obj.next_page_number }}" role="button">#}
+{#        <i class="fa fa-angle-right" aria-hidden="true"></i>#}
+{#        <span class="sr-only">Next</span>#}
+{#    </a>#}
+{#{% endif %}#}
+</div>
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- end all testimonials -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleFormBtn = document.getElementById('toggleFormBtn');
+            const testimonialForm = document.getElementById('testimonialForm');
+
+            toggleFormBtn.addEventListener('click', function () {
+                if (testimonialForm.style.display === 'none' || testimonialForm.style.display === '') {
+                    testimonialForm.style.display = 'block';
+                    toggleFormBtn.textContent = 'Hide Testimonial Form';
+                } else {
+                    testimonialForm.style.display = 'none';
+                    toggleFormBtn.textContent = 'Show Testimonial Form';
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/newsletter.css' %}">
+{% endblock %}
+
+{% block title %}Subscribe to newsletter!{% endblock %}
+
+{% block content%}
+{% for obj in all_subscribed %}
+    <p>{{ obj.subscribed }}</p>
+{% endfor %}
+
+
+<div class="container-news">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>By subscribing to our newsletter, you will receive:</p>
+        <ul>
+            <li>Free offers</li>
+            <li>Discounts</li>
+            <li>Future promotions</li>
+            <li>Notifications</li>
+            <li>Vouchers</li>
+        </ul>
+        <form method="post">
+            {% csrf_token %}
+            {{ newsletter_form }}
+            <button class="button-footer">Subscribe!</button>
+        </form>
+    </div>
+{% endblock %}
