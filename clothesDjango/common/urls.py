@@ -1,3 +1,4 @@
+from django import views
 from django.urls import path, include
 
 from clothesDjango.common.views import index, show_why, show_contacts, show_testimonials, \
@@ -6,7 +7,7 @@ from clothesDjango.common.views import index, show_why, show_contacts, show_test
 
 urlpatterns = [
     path('', index, name='index'),
-    path('why/', show_why, name='why'),
+    path('why/', views.generic.TemplateView.as_view(template_name='why.html'), name='why'),
     path('contacts/', show_contacts, name='contacts'),
     path('testimonials/', include([
         path('', show_testimonials, name='testimonials'),
