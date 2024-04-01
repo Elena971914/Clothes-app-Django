@@ -1,12 +1,13 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 
-from clothesDjango.accounts.models import User
+UserModel = get_user_model()
 
 
-@admin.register(User)
+@admin.register(UserModel)
 class AdminUser(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'email', 'get_all_orders']
+    list_display = ['first_name', 'last_name', 'email']
     search_fields = ['first_name', 'last_name', 'email']
-
-    def get_all_orders(self):
-        return ', '.join([o.name for o in self.orders.all()])
+#
+#     def get_all_orders(self):
+#         return ', '.join([o.name for o in self.orders.all()])

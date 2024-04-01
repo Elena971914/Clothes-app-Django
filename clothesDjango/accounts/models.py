@@ -1,81 +1,77 @@
+from django.contrib.auth import models as auth_models
+from django.core.validators import MinLengthValidator
 from django.db import models
 
-from clothesDjango.accounts.validators import validate_before_today, validate_age
+from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes
 from clothesDjango.catalogue.models import Cloth
 
 
-class User(models.Model):
+class MyUser(auth_models.AbstractUser):
+    email = models.EmailField(
+        unique=True
+    )
     first_name = models.CharField(
-        max_length=30,
-        null=False,
-        blank=False,
+        validators=[MinLengthValidator(30), validate_letters_and_dashes],
+        max_length=30
     )
     last_name = models.CharField(
-        max_length=30,
-        null=False,
-        blank=False,
+        validators=[MinLengthValidator(30), validate_letters_and_dashes],
+        max_length=30
     )
-    email = models.EmailField(
-        unique=True,
-        null=False,
-        blank=False,
+    date_of_birth = models.DateField(
+        validators=[validate_age],
+        null=True
     )
-    birth_date = models.DateField(
-        validators=[validate_before_today, validate_age]
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        related_name='myuser_permissions',  # Unique related name
+        help_text='Specific permissions for this user.',
     )
-    agreed_to_terms = models.BooleanField(
-        null=False,
-        blank=False,
-    )
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
-
-class Order(models.Model):
-    to_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    to_cloth = models.ForeignKey(
-        Cloth,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-        )
-    date_of_purchase = models.DateField(
-        auto_now=True,
-        null=True,
-        blank=True
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        related_name='myuser_groups',  # Unique related name
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
     )
 
 
-class Like(models.Model):
-    to_cloth = models.ForeignKey(
-        Cloth,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    to_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
+class AdminUser(MyUser):
+    pass
+
+
+class ClientUser(MyUser):
+    pass
+
+
+# class Order(models.Model):
+#     to_cloth = models.ForeignKey(
+#         Cloth,
+#         on_delete=models.CASCADE,
+#         null=True,
+#         blank=True
+#         )
+#     date_of_purchase = models.DateField(
+#         auto_now=True,
+#         null=True,
+#         blank=True
+#     )
+#
+#
+# class Like(models.Model):
+#     to_cloth = models.ForeignKey(
+#         Cloth,
+#         on_delete=models.CASCADE,
+#         null=True,
+#         blank=True
+#     )
 
 
 class Cart(models.Model):
     to_cloth = models.ForeignKey(
         Cloth,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    to_user = models.ForeignKey(
-        User,
         on_delete=models.CASCADE,
         null=True,
         blank=True

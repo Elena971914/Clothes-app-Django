@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
@@ -17,13 +18,13 @@ def show_why(request):
     return render(request, 'why.html')
 
 
+@login_required()
 def show_contacts(request):
     return render(request, 'contact.html')
 
 
 def show_testimonials(request):
     all_testimonials = Testimonial.objects.all()
-
 
     testimonial_form = TestimonialForm(request.POST or None, request.FILES or None)
     if testimonial_form.is_valid():
@@ -33,11 +34,11 @@ def show_testimonials(request):
     context = {
         'testimonial_form': testimonial_form,
         'all_testimonials': all_testimonials,
-        'page_obj': page_obj
    }
     return render(request, 'testimonial.html', context)
 
 
+@login_required
 def edit_testimonial(request, pk):
     all_testimonials = Testimonial.objects.all()
     testimonial = Testimonial.objects.get(pk=pk)
@@ -55,6 +56,7 @@ def edit_testimonial(request, pk):
     return render(request, 'testimonial-edit.html', context)
 
 
+@login_required()
 def delete_testimonial(request, pk):
     testimonial = Testimonial.objects.get(pk=pk)
     testimonial.delete()

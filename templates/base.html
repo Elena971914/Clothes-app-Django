@@ -31,6 +31,8 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  <!-- Navbar styling -->
+  <link href="{% static 'css/base.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -69,29 +71,38 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'testimonials' %}">
-                Testimonial
+                Testimonials
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contacts' %}">Contact Us</a>
             </li>
+              <div class="user-option">
+                <div class="dropdown-container" onclick="toggleDropdown()">
+                    <div class="icon-wrapper">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </div>
+                    <div id="dropdownMenu" class="dropdown-menu">
+                        {% if not request.user.is_authenticated %}
+                        <a href="{% url 'login' %}" class="dropdown-link">Login</a>
+                        <a href="{% url 'register' %}" class="dropdown-link">Register</a>
+                        {% else %}
+                        <a href="{% url 'logout' %}" class="dropdown-link">Logout</a>
+                        <a href="#" class="dropdown-link">Profile</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="icon-wrapper">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                </div>
+                <div class="icon-wrapper">
+                    &#10084;
+                </div>
+                {% endif %}
+            </div>
           </ul>
-          <div class="user_option">
-            <a href="">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <span>
-                Login
-              </span>
-            </a>
-            <a href="">
-              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            </a>
-{#            <form class="form-inline ">#}
-{#              <button class="btn nav_search-btn" type="submit">#}
-{#                <i class="fa fa-search" aria-hidden="true"></i>#}
-{#              </button>#}
-{#            </form>#}
-          </div>
         </div>
       </nav>
     </header>
@@ -188,6 +199,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <script src="{% static 'js/custom.js' %}"></script>
+  <script>
+    function toggleDropdown() {
+        var dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
 
 </body>
 </html>

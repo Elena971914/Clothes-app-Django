@@ -1,0 +1,43 @@
+.user-option {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-container {
+    position: relative;
+    margin-left: 10px
+}
+
+.dropdown-container:hover {
+    color: gray;
+    cursor: pointer
+}
+
+.icon-wrapper {
+    margin-right: 30px;
+}
+
+.icon-wrapper:hover .fa {
+    color: #999;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.dropdown-link {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.dropdown-link:hover {
+    color: #db4f66;
+}
