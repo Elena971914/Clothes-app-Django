@@ -89,7 +89,7 @@
                         <a href="{% url 'register' %}" class="dropdown-link">Register</a>
                         {% else %}
                         <a href="{% url 'logout' %}" class="dropdown-link">Logout</a>
-                        <a href="#" class="dropdown-link">Profile</a>
+                        <a href="{% url 'show user profile' %}" class="dropdown-link">Profile</a>
                         {% endif %}
                     </div>
                 </div>

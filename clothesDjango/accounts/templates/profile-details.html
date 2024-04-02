@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Profile Details
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+  <h1 class="header-title">Моят профил</h1>
+  <div class="club-info">
+    <h2 class="club-info-title">MODIVO FASHION CLUB</h2>
+    <p class="club-status">SILVER</p>
+    <p class="club-card-number">Номер на карта: 152274769</p>
+  </div>
+  <div class="points-info">
+    <div class="points">
+      <h2 class="points-title">MODIVOPoints</h2>
+      <p class="points-value">2200</p>
+    </div>
+    <div class="points">
+      <h2 class="points-title">MODIVOPoints</h2>
+      <p class="points-value">6600</p>
+    </div>
+    <div class="points">
+      <h2 class="points-title">MODIVOPoints</h2>
+      <p class="points-value">0</p>
+    </div>
+  </div>
+</div>
+<section class="order-history">
+  <h2 class="order-history-title">Последна поръчка</h2>
+  <table class="order-history-table">
+    <thead>
+      <tr>
+        <th>Поръчка №</th>
+        <th>Дата на поръчка</th>
+        <th>Сума</th>
+        <th>Статус на поръчката</th>
+        <th>Подробности</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>BGM000822474</td>
+        <td>25.01.2024</td>
+        <td>170,34 лв</td>
+        <td>Изпратено</td>
+        <td><a href="#" class="order-details-link">Виж подробностите</a></td>
+      </tr>
+      <!-- Additional order history rows can go here -->
+    </tbody>
+  </table>
+</section>
+<section class="profile-info">
+  <h2 class="profile-info-title">Моите данни</h2>
+  <div class="profile">
+    <p class="profile-email">elena971914@gmail.com</p>
+    <p class="profile-verification-status">Проверен</p>
+    <a href="#" class="profile-edit-link">Промени данните на профила</a>
+  </div>
+  <div class="shipping-address">
+    <h3 class="shipping-address-title">Адрес за доставка</h3>
+    <p class="shipping-address-info">Елена Петкова</p>
+    <p class="shipping-address-info">Люлин 3 3 307</p>
+    <p class="shipping-address-info">София, 1336</p>
+    <p class="shipping-address-info">BG</p>
+    <p class="shipping-address-info">0895775478</p>
+    <a href="#" class="shipping-address-edit-link">Промени адрес</a>
+  </div>
+</section>
+<div class="footer">
+  <a href="#" class="footer-link">Виж всички</a>
+</div>
+
+
+{% endblock %}

@@ -1,10 +1,14 @@
+from django.conf.urls.static import static
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic as views
-from django.contrib.auth import views as auth_views, logout, login
+from django.contrib.auth import views as auth_views, logout, login, get_user_model
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
+from clothesDjango.accounts.forms import RegisterUserForm, ProfileEditForm
+from clothesDjango.accounts.models import Profile
 
-from clothesDjango.accounts.forms import RegisterUserForm
+UserModel = get_user_model()
 
 
 class RegisterUserView(CreateView):
@@ -39,17 +43,39 @@ def logout_user(request):
     return redirect('index')
 
 
-def show_user_profile(request, pk):
-    return None
+#                        PROFILE VIEWS              PROFILE VIEWS
+class ProfileDetailsView(views.DetailView):
+
+    template_name = "profile-details.html"
+    model = UserModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # TODO: orders
+        # context['pets'] = self.request.user.pet_set.all()
+
+        return context
 
 
-def edit_user_profile(request, pk):
-    return None
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    template_name = 'profile-edit.html'
+    form_class = ProfileEditForm
+    success_url = reverse_lazy('profile_details')  # Redirect to profile details page
+    model = Profile
+
+    def get_object(self, queryset=None):
+        # Get or create the profile object for the current user
+        profile, created = Profile.objects.get_or_create(user=self.request.user)
+        return profile
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        profile.user = self.request.user
+        profile.save()
+        return super().form_valid(form)
 
 
-def delete_user_profile(request, pk):
-    return None
+class ProfileDeleteView(views.DeleteView):
+    # queryset = Profile.objects.all()
+    template_name = "profile-delete.html"
 
-
-def show_user_orders(request, pk):
-    return None

@@ -1,6 +1,8 @@
-from django.contrib.auth import models as auth_models
+
+from django.contrib.auth import models as auth_models, get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.utils import timezone
 
 from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes
 from clothesDjango.catalogue.models import Cloth
@@ -12,16 +14,31 @@ class MyUser(auth_models.AbstractUser):
     )
     first_name = models.CharField(
         validators=[MinLengthValidator(30), validate_letters_and_dashes],
-        max_length=30
+        max_length=30,
+        null=True,
+        blank=True
     )
     last_name = models.CharField(
         validators=[MinLengthValidator(30), validate_letters_and_dashes],
-        max_length=30
+        max_length=30,
+        null=True,
+        blank=True
     )
     date_of_birth = models.DateField(
         validators=[validate_age],
-        null=True
+        null=True,
+        blank=True
     )
+    phone_number = models.CharField(
+        validators=[MinLengthValidator(10)],
+        max_length=10,
+        null=True,
+        blank=True
+    )
+    address = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True)
     user_permissions = models.ManyToManyField(
         'auth.Permission',
         verbose_name='user permissions',
@@ -46,18 +63,10 @@ class ClientUser(MyUser):
     pass
 
 
-# class Order(models.Model):
-#     to_cloth = models.ForeignKey(
-#         Cloth,
-#         on_delete=models.CASCADE,
-#         null=True,
-#         blank=True
-#         )
-#     date_of_purchase = models.DateField(
-#         auto_now=True,
-#         null=True,
-#         blank=True
-#     )
+class Profile(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+
+
 #
 #
 # class Like(models.Model):

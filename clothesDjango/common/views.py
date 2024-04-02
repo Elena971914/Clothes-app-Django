@@ -18,7 +18,6 @@ def show_why(request):
     return render(request, 'why.html')
 
 
-@login_required()
 def show_contacts(request):
     return render(request, 'contact.html')
 
@@ -28,7 +27,10 @@ def show_testimonials(request):
 
     testimonial_form = TestimonialForm(request.POST or None, request.FILES or None)
     if testimonial_form.is_valid():
-        testimonial_form.save()
+        testimonial = testimonial_form.save()
+        testimonial.user = request.user
+        testimonial.save()
+
         return redirect('testimonials')
 
     context = {
