@@ -1,0 +1,29 @@
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container styles */
+.container-contacts {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Contact info styles */
+.contact-info h3 {
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+
+/* Warm tips styles */
+.warm-tips h3 {
+    margin-bottom: 10px;
+}

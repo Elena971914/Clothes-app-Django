@@ -1,6 +1,6 @@
 
 from django.contrib.auth import models as auth_models, get_user_model
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
 
@@ -9,17 +9,25 @@ from clothesDjango.catalogue.models import Cloth
 
 
 class MyUser(auth_models.AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        validators=[
+            MinLengthValidator(4, message="Username must be at least 4 characters long."),
+            RegexValidator(r'^\S+$', message="Username cannot contain spaces.")
+        ]
+    )
     email = models.EmailField(
         unique=True
     )
     first_name = models.CharField(
-        validators=[MinLengthValidator(30), validate_letters_and_dashes],
+        validators=[validate_letters_and_dashes],
         max_length=30,
         null=True,
         blank=True
     )
     last_name = models.CharField(
-        validators=[MinLengthValidator(30), validate_letters_and_dashes],
+        validators=[validate_letters_and_dashes],
         max_length=30,
         null=True,
         blank=True
@@ -36,6 +44,14 @@ class MyUser(auth_models.AbstractUser):
         blank=True
     )
     address = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True)
+    city = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True)
+    postal_code = models.CharField(
         max_length=100,
         blank=True,
         null=True)

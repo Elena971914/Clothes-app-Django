@@ -1,0 +1,101 @@
+/* Centering the content */
+.header,
+.order-history,
+.profile-info {
+  text-align: center;
+  margin: 40px auto;
+  max-width: 800px; /* Limiting the width of the content */
+}
+
+/* Adjusting margins for titles */
+.header-title,
+.order-history-title,
+.profile-info-title,
+.shipping-address-title {
+  margin: 20px 0;
+}
+
+/* Styling for the table */
+.order-history-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.order-history-table th,
+.order-history-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Styling for profile and shipping address sections */
+.profile,
+.shipping-address {
+  display: inline-block;
+  vertical-align: top;
+  margin: 30px 60px ;
+}
+
+.profile-email,
+.profile-verification-status,
+.shipping-address-info {
+  margin-bottom: 10px;
+}
+
+.profile-edit-link,
+.shipping-address-edit-link {
+  display: block;
+  margin-top: 10px;
+}
+
+/* Button styles */
+.view-all-orders-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: 2px solid #ff69b4; /* Pink border */
+  border-radius: 20px; /* Round corners */
+  background-color: #fff; /* White background */
+  color: #ff69b4; /* Pink text color */
+  text-decoration: none; /* Remove underline */
+  transition: all 0.3s ease; /* Smooth transition */
+
+  /* Positioning */
+  position: relative;
+  bottom: -10px;
+  left: 0;
+}
+
+/* Hover effect */
+.view-all-orders-button:hover {
+  background-color: #ff69b4; /* Pink background */
+  color: #fff; /* White text color */
+}
+
+/* Adjusting button within container */
+.order-history {
+  position: relative;
+}
+
+.separator {
+  width: 70%;
+  height: 2px; /* Adjust height as needed */
+  background-color: #ccc; /* Color of the separator line */
+  margin: 20px auto; /* Adjust margin as needed */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  .header,
+  .order-history,
+  .profile-info {
+    margin: 20px auto;
+  }
+
+  .profile,
+  .shipping-address {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}

@@ -12,29 +12,17 @@
 {% block content %}
 
 <div class="header">
-  <h1 class="header-title">Моят профил</h1>
-  <div class="club-info">
-    <h2 class="club-info-title">MODIVO FASHION CLUB</h2>
-    <p class="club-status">SILVER</p>
-    <p class="club-card-number">Номер на карта: 152274769</p>
-  </div>
-  <div class="points-info">
-    <div class="points">
-      <h2 class="points-title">MODIVOPoints</h2>
-      <p class="points-value">2200</p>
-    </div>
-    <div class="points">
-      <h2 class="points-title">MODIVOPoints</h2>
-      <p class="points-value">6600</p>
-    </div>
-    <div class="points">
-      <h2 class="points-title">MODIVOPoints</h2>
-      <p class="points-value">0</p>
-    </div>
-  </div>
+    {# TODO: VERIFY IF WORKS#}
+    {% if request.user.get_full_name %}
+        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+    {% else %}
+        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+    {% endif %}
+
 </div>
 <section class="order-history">
-  <h2 class="order-history-title">Последна поръчка</h2>
+    {# TODO:ORDERS #}
+  <h2 class="order-history-title">Last order</h2>
   <table class="order-history-table">
     <thead>
       <tr>
@@ -56,27 +44,46 @@
       <!-- Additional order history rows can go here -->
     </tbody>
   </table>
+    <a href="#" class="view-all-orders-button">View All Orders</a>
 </section>
+    <div class="separator"></div>
 <section class="profile-info">
-  <h2 class="profile-info-title">Моите данни</h2>
+  <h2 class="profile-info-title">My data</h2>
   <div class="profile">
-    <p class="profile-email">elena971914@gmail.com</p>
-    <p class="profile-verification-status">Проверен</p>
-    <a href="#" class="profile-edit-link">Промени данните на профила</a>
+    <h3 class="shipping-address-title">Personal details</h3>
+  {% if request.user.get_full_name %}
+      <p class="shipping-address-info"><b>{{ request.user.get_full_name}}</b></p>
+    {% endif %}
+    {% if request.user.email %}
+      <p class="profile-email">Email: <b>{{ request.user.email }}</b></p>
+    {% endif %}
+    {% if request.user.phone_number %}
+      <p class="profile-phone">Phone: <b>{{ request.user.phone_number }}</b></p>
+    {% endif %}
+    {% if request.user.date_of_birth %}
+      <p class="profile-dob">Date of Birth: <b>{{ request.user.date_of_birth }}</b></p>
+    {% endif %}
+    <p class="profile-verification-status">Confirmed verification</p>
+    <a href="{% url 'edit user profile' pk=request.user.pk %}" class="profile-edit-link">Change the profile data</a>
   </div>
-  <div class="shipping-address">
-    <h3 class="shipping-address-title">Адрес за доставка</h3>
-    <p class="shipping-address-info">Елена Петкова</p>
-    <p class="shipping-address-info">Люлин 3 3 307</p>
-    <p class="shipping-address-info">София, 1336</p>
-    <p class="shipping-address-info">BG</p>
-    <p class="shipping-address-info">0895775478</p>
-    <a href="#" class="shipping-address-edit-link">Промени адрес</a>
-  </div>
-</section>
-<div class="footer">
-  <a href="#" class="footer-link">Виж всички</a>
+  {% if request.user.address %}
+    <div class="shipping-address">
+  <h3 class="shipping-address-title">Delivery address</h3>
+  {% if request.user.address %}
+    <p class="shipping-address-info">Address: <b>{{ request.user.address }}</b></p>
+  {% endif %}
+  {% if request.user.city %}
+    <p class="shipping-address-info">City: <b>{{ request.user.city }}</b></p>
+  {% endif %}
+  {% if request.user.postal_code %}
+    <p class="shipping-address-info">Postal code: <b>{{ request.user.postal_code }}</b></p>
+  {% endif %}
+  <p class="shipping-address-info">Country: <b>Bulgaria</b></p>
 </div>
+
+  {% endif %}
+</section>
+
 
 
 {% endblock %}
