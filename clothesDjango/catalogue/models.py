@@ -1,7 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Model
 
 from clothesDjango.catalogue.validators import image_size_validator
+
+UserModel = get_user_model()
 
 
 class Cloth(models.Model):
@@ -60,5 +63,12 @@ class Cloth(models.Model):
         default=0
     )
 
+    photo = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to='clothes_images'
+    )
+
     def __str__(self):
         return f'{self.name}'
+

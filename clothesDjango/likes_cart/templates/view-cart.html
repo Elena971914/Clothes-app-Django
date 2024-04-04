@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ cloth.name }}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/product-details.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <h1>My Cart</h1>
+    <ul>
+        {% for cart_item in object_list %}
+        <li>
+            <h3>{{ cart_item.cloth.name }}</h3>
+            <p>Price: {{ cart_item.cloth.price }}</p>
+        </li>
+        {% empty %}
+        <li>Your cart is empty</li>
+        {% endfor %}
+    </ul>
+    </div>
+
+{% endblock %}

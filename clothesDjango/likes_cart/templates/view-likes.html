@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ cloth.name }}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/shop.css' %}">
+<link rel="stylesheet" href="{% static 'css/view-likes.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="shop_section layout_padding">
+<div class="container">
+  <div class="heading_container heading_center">
+    <h1>My Liked items</h1>
+
+    {% for cart_item in object_list %}
+     <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="box">
+        <a href="{% url 'show product details' cart_item.cloth.pk %}" id="current-{{ cart_item.cloth.id }}">
+          <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
+            <img src="{{ cart_item.cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+          </div>
+          <div class="detail-box">
+            <h6>{{ cart_item.cloth.name }}</h6>
+            <h6>
+              PRICE<span>{{ cart_item.cloth.price }} BGN</span>
+            </h6>
+          </div>
+        </a>
+      </div>
+     <div class="button-container-likes">
+        <a href="{%  url 'add to cart' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
+            <button class="add-to-cart-likes">Add to Cart</button>
+        </a>
+        <a href="{%  url 'like' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
+            <button class="remove-from-favorites-likes">Remove from Favorites</button>
+        </a>
+     </div>
+    </div>
+        </div>
+        </div>
+        </section>
+    {% empty %}
+        <div class="empty-likes">
+            <h2>Your cart is empty</h2>
+                <div class="button-container-likes">
+                    <a href="{%  url 'shop' %}" class="button-link-likes">
+                        <button class="remove-from-favorites-likes">SHOP</button>
+                    </a>
+                </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

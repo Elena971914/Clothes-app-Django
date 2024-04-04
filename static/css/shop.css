@@ -40,3 +40,39 @@
     color: red;
 }
 
+
+.box {
+  position: relative;
+}
+
+.buttons-like-cart {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease;
+}
+
+.box:hover .buttons-like-cart {
+  opacity: 1; /* Show buttons on hover */
+}
+
+.cart-btn,
+.heart-btn {
+  background-color: transparent;
+  border: none;
+  color: #000; /* Button color */
+  font-size: 24px;
+  cursor: pointer;
+  margin: 5px;
+  transition: color 0.3s ease;
+}
+
+.cart-btn a svg:hover,
+.heart-btn a svg:hover {
+  color: #db4f66;
+}
+
+
+

@@ -1,0 +1,55 @@
+.button-container-likes {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.button-container-likes .button-link-likes {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.button-container-likes button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.add-to-cart-likes {
+    background-color: #db4f66;
+    color: #fff;
+}
+
+.remove-from-favorites-likes {
+    background-color: #fff;
+    color: #db4f66;
+    border: 2px solid #db4f66;
+}
+
+.button-container-likes button:hover {
+    transform: scale(1.05);
+}
+
+.add-to-cart-likes:hover {
+    background-color: #fff;
+    color: #db4f66;
+    border: 2px solid #db4f66;
+}
+
+.remove-from-favorites-likes:hover {
+    background-color: #db4f66;
+    color: #fff;
+}
+
+.empty-likes {
+    margin: 140px;
+    color: #db4f66;
+}

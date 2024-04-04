@@ -1,3 +1,7 @@
+/*a {color:black}*/
+/*a:hover {color: #999;*/
+/*    cursor: pointer;}*/
+
 .user-option {
     display: flex;
     align-items: center;
@@ -17,10 +21,15 @@
     margin-right: 30px;
 }
 
-.icon-wrapper:hover .fa {
+.icon-wrapper a svg{
+    color:black
+}
+
+.icon-wrapper:hover a svg{
     color: #999;
     cursor: pointer;
 }
+
 
 .dropdown-menu {
     display: none;

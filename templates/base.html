@@ -22,6 +22,8 @@
 
   <!-- slider stylesheet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css' %}" />
 
   <!-- bootstrap core css -->
@@ -95,10 +97,10 @@
                 </div>
                 {% if request.user.is_authenticated %}
                 <div class="icon-wrapper">
-                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <a href="{% url 'view cart' pk_user=request.user.pk%}"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
                 </div>
                 <div class="icon-wrapper">
-                    &#10084;
+                    <a href="{% url 'view likes' pk_user=request.user.pk%}"><i class="fa fa-heart" aria-hidden="true"></i></a>
                 </div>
                 {% endif %}
             </div>

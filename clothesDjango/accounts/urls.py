@@ -12,6 +12,7 @@ urlpatterns = [
         path('', ProfileDetailsView.as_view(), name='show user profile'),
         path('edit/', ProfileEditView.as_view(), name='edit user profile'),
         # path('delete/', ProfileDeleteView.as_view(), name='delete user profile'),
-        path('my-orders/', include('clothesDjango.orders.urls'))]
+        path('my-orders/', include('clothesDjango.orders.urls')),
+        ]
     ))
 ]

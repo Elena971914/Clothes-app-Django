@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'clothesDjango.common',
     'clothesDjango.catalogue',
     'clothesDjango.accounts',
-    'clothesDjango.orders'
+    'clothesDjango.orders',
+    'clothesDjango.likes_cart'
 ]
 
 MIDDLEWARE = [

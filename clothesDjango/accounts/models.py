@@ -5,7 +5,6 @@ from django.db import models
 from django.utils import timezone
 
 from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes
-from clothesDjango.catalogue.models import Cloth
 
 
 class MyUser(auth_models.AbstractUser):
@@ -33,7 +32,7 @@ class MyUser(auth_models.AbstractUser):
         blank=True
     )
     date_of_birth = models.DateField(
-        validators=[validate_age],
+        validators=[validate_age, validate_before_today],
         null=True,
         blank=True
     )
@@ -82,22 +81,3 @@ class ClientUser(MyUser):
 class Profile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
 
-
-#
-#
-# class Like(models.Model):
-#     to_cloth = models.ForeignKey(
-#         Cloth,
-#         on_delete=models.CASCADE,
-#         null=True,
-#         blank=True
-#     )
-
-
-class Cart(models.Model):
-    to_cloth = models.ForeignKey(
-        Cloth,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
