@@ -6,22 +6,48 @@
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/product-details.css' %}">
+<link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-    <h1>My Cart</h1>
-    <ul>
+    <h1 class="cart-heading">My Cart</h1>
+
+<div class="cart-container">
+    <ul class="cart-list">
+        <h3 class="cart-heading">Products</h3>
         {% for cart_item in object_list %}
-        <li>
-            <h3>{{ cart_item.cloth.name }}</h3>
-            <p>Price: {{ cart_item.cloth.price }}</p>
+        <li class="cart-item" >
+            <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img">
+            <div class="cart-info">
+                <h6>{{ cart_item.cloth.name }}</h6>
+                <p>{{ cart_item.cloth.description }}</p>
+                <p>Price: {{ cart_item.cloth.price }}</p>
+                <p>Size: {{ cart_item.size }}</p>
+                <p>Color: {{ cart_item.cloth.color }}</p>
+                <p>Quantity: TODO</p>
+                <button class="cart-button">
+                    <a href="{% url 'delete cart item' pk_cart=cart_item.pk %}" class="cart-button-link">Delete</a>
+                </button>
+                <button class="cart-button">
+                    <a href="{% url 'show product details' cart_item.cloth.pk %}" class="cart-button-link" id="current-{{ cart_item.cloth.id }}">Show product details</a>
+                </button>
+            </div>
         </li>
         {% empty %}
-        <li>Your cart is empty</li>
+        <li class="cart-item">Your cart is empty</li>
         {% endfor %}
     </ul>
+    <div class="cart-summary">
+        <hr>
+        <h2>Summary</h2>
+        <hr>
+        <p>Total price of the products: TODO</p>
+        <hr>
+        <p>Estimated delivery time: 3-5 days</p>
+        <button class="cart-order-button">MAKE AN ORDER</button>
     </div>
+</div>
+
+
 
 {% endblock %}

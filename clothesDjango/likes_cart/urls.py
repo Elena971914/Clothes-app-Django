@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 
-from clothesDjango.likes_cart.views import ViewLikes, ViewCart, like_toggle, cart_toggle
+from clothesDjango.likes_cart.views import ViewLikes, ViewCart, like_toggle, delete_cart_item, add_to_cart
 
 urlpatterns = [
-    path("<int:pk_user>/like/<int:pk_cloth>/", like_toggle, name="like"),
-    path("<int:pk_user>/add_to_cart/<int:pk_cloth>/", cart_toggle, name="add to cart"),
-    path('<int:pk_user>/my-likes/', ViewLikes.as_view(), name='view likes'),
-    path('<int:pk_user>/my-cart/', ViewCart.as_view(), name='view cart'),
+    path("like/<int:pk_cloth>/", like_toggle, name="like"),
+    path("add_to_cart/<int:pk_cloth>/", add_to_cart, name="add to cart"),
+    path('my-likes/', ViewLikes.as_view(), name='view likes'),
+    path('my-cart/', ViewCart.as_view(), name='view cart'),
+    path('my-cart/<int:pk_cart>/delete', delete_cart_item, name='delete cart item')
 ]
