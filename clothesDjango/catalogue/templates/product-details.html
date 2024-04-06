@@ -32,7 +32,8 @@
             <p class="product-description">Size: {{ cloth.size }}</p>
             {% endif %}
             <p class="product-description">Color: {{ cloth.color }}</p>
-            <p class="product-size">Available sizes: <select class="size-dropdown">
+            <p class="product-size">Available sizes:
+                <select class="size-dropdown">
                 {% if cloth.stocked_S %}
                 <option value="s">S</option>
                 {% endif %}
@@ -42,7 +43,8 @@
                 {% if cloth.stocked_L %}
                 <option value="s">L</option>
                 {% endif %}
-            </select></p>
+                </select>
+            </p>
             <button class="add-to-cart-button">Add to Cart</button>
             <button class="like-button">Like</button>
             <div class="container">

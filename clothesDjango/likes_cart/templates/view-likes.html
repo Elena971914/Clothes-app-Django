@@ -12,46 +12,120 @@
 
 {% block content %}
     <section class="shop_section layout_padding">
-<div class="container">
-  <div class="heading_container heading_center">
-    <h1>My Liked items</h1>
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h1>My Liked items</h1>
 
-    {% for cart_item in object_list %}
-     <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="box">
-        <a href="{% url 'show product details' cart_item.cloth.pk %}" id="current-{{ cart_item.cloth.id }}">
-          <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
-            <img src="{{ cart_item.cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
-          </div>
-          <div class="detail-box">
-            <h6>{{ cart_item.cloth.name }}</h6>
-            <h6>
-              PRICE<span>{{ cart_item.cloth.price }} BGN</span>
-            </h6>
-          </div>
-        </a>
-      </div>
-     <div class="button-container-likes">
-        <a href="{%  url 'add to cart' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
-            <button class="add-to-cart-likes">Add to Cart</button>
-        </a>
-        <a href="{%  url 'like' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
-            <button class="remove-from-favorites-likes">Remove from Favorites</button>
-        </a>
-     </div>
-    </div>
-        </div>
-        </div>
-        </section>
-    {% empty %}
-        <div class="empty-likes">
-            <h2>Your cart is empty</h2>
-                <div class="button-container-likes">
-                    <a href="{%  url 'shop' %}" class="button-link-likes">
-                        <button class="remove-from-favorites-likes">SHOP</button>
-                    </a>
+                {% for cart_item in object_list %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box">
+                        <a href="{% url 'show product details' cart_item.cloth.pk %}" id="current-{{ cart_item.cloth.id }}">
+                            <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
+                                <img src="{{ cart_item.cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+                            </div>
+                            <div class="detail-box">
+                                <h6>{{ cart_item.cloth.name }}</h6>
+                                <h6>
+                                    PRICE<span>{{ cart_item.cloth.price }} BGN</span>
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="button-container-likes">
+                        <form id="add-to-cart-form-{{ cart_item.cloth.id }}" method="post" action="{%  url 'add to cart' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
+                            <p>Select a size:
+                                <select class="size-dropdown" name="size" id="size-dropdown-{{ cart_item.cloth.id }}">
+                                    <option value="" disabled selected>Select Size</option>
+                                    {% if cart_item.cloth.stocked_S %}
+                                        <option value="S">S</option>
+                                    {% endif %}
+                                    {% if cart_item.cloth.stocked_M %}
+                                        <option value="M">M</option>
+                                    {% endif %}
+                                    {% if cart_item.cloth.stocked_L %}
+                                        <option value="L">L</option>
+                                    {% endif %}
+                                </select>
+                            </p>
+                        {% csrf_token %}
+                            <button type="submit" class="add-to-cart-likes" id="add-to-cart-btn-{{ cart_item.cloth.id }}" disabled>Add to Cart</button>
+                        </form>
+                        <a href="{%  url 'like' pk_cloth=cart_item.cloth.pk pk_user=request.user.pk %}" class="button-link-likes">
+                            <button class="remove-from-favorites-likes">Remove from Favorites</button>
+                        </a>
+                    </div>
                 </div>
+                {% endfor %}
+            </div>
         </div>
-    {% endfor %}
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% for cart_item in object_list %}
+            var sizeDropdown = document.getElementById('size-dropdown-{{ cart_item.cloth.id }}');
+            var addToCartForm = document.getElementById('add-to-cart-form-{{ cart_item.cloth.id }}');
+            var addToCartBtn = document.getElementById('add-to-cart-btn-{{ cart_item.cloth.id }}');
+
+            sizeDropdown.addEventListener('change', function() {
+                if (sizeDropdown.value !== "") {
+                    addToCartBtn.removeAttribute('disabled');
+                } else {
+                    addToCartBtn.setAttribute('disabled', 'disabled');
+                }
+            });
+
+            // Optional: Disable button on page load if no size is selected
+            if (sizeDropdown.value === "") {
+                addToCartBtn.setAttribute('disabled', 'disabled');
+            }
+            {% endfor %}
+        });
+    </script>
+
+{#    TO BE ABLE TO CHANGE THE NAME FROM 'ADD TO CART' TO 'REMOVE FROM CART' IF IT IS ADDED #}
+{#    <script>#}
+{#        document.addEventListener('DOMContentLoaded', function() {#}
+{#    {% for cart_item in object_list %}#}
+{#    var sizeDropdown = document.getElementById('size-dropdown-{{ cart_item.cloth.id }}');#}
+{#    var addToCartForm = document.getElementById('add-to-cart-form-{{ cart_item.cloth.id }}');#}
+{#    var addToCartBtn = document.getElementById('add-to-cart-btn-{{ cart_item.cloth.id }}');#}
+{##}
+{#    // Check if there's a saved state in local storage#}
+{#    var buttonState = localStorage.getItem('add-to-cart-state-{{ cart_item.cloth.id }}');#}
+{#    if (buttonState) {#}
+{#        addToCartBtn.textContent = buttonState;#}
+{#    }#}
+{##}
+{#    sizeDropdown.addEventListener('change', function() {#}
+{#        if (sizeDropdown.value !== "") {#}
+{#            addToCartBtn.removeAttribute('disabled');#}
+{#        } else {#}
+{#            addToCartBtn.setAttribute('disabled', 'disabled');#}
+{#        }#}
+{#    });#}
+{##}
+{#    // Optional: Disable button on page load if no size is selected#}
+{#    if (sizeDropdown.value === "") {#}
+{#        addToCartBtn.setAttribute('disabled', 'disabled');#}
+{#    }#}
+{##}
+{#    // Add click event listener to the button#}
+{#    addToCartBtn.addEventListener('click', function() {#}
+{#        var currentState = addToCartBtn.textContent;#}
+{#        var newState = currentState === "Add to Cart" ? "Remove from Cart" : "Add to Cart";#}
+{##}
+{#        // Save the new state to local storage#}
+{#        localStorage.setItem('add-to-cart-state-{{ cart_item.cloth.id }}', newState);#}
+{##}
+{#        // Update the button text#}
+{#        addToCartBtn.textContent = newState;#}
+{#    });#}
+{#    {% endfor %}#}
+{#});#}
+{##}
+{#    </script>#}
 
 {% endblock %}
+
+
+
