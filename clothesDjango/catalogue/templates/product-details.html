@@ -7,7 +7,7 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/product-details.css' %}">
-<link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
     <div class="product-images">
         <div class="image-grid">
             <img src="{{ cloth.photo.url }}" alt="Product Image">
-            {# TODO: MAKE BETTER LAYOUT #}
+{#            TODO: MAKE BETTER LAYOUT #}
         </div>
     </div>
     <div class="product-info">
@@ -53,8 +53,14 @@
             {% csrf_token %}
             <button type="submit" class="cart-order-button" id="add-to-cart-btn" style="{{ 'color:gray; background-color:#f9ece6; width:90%' }}" disabled>Add to Cart</button>
         </form>
-        <button class="cart-order-button" style="{{ 'color:gray; background-color:#f9ece6; display:inline-block; width:45%' }}">
-            <a href="{% url 'like' pk_cloth=cloth.pk %}" id="like-button" style="{{ 'color:gray' }}">Like</a>
+        <button id='like-button' class="cart-order-button" style="{{ 'color:gray; background-color:#f9ece6; display:inline-block; width:45%' }}">
+            <a href="{%  url 'like' pk_cloth=cloth.pk %}" style="{{ 'color:gray' }}">
+                {% if request.session.is_liked %}
+                    Remove from wishlist
+                {% else %}
+                    Like
+                {% endif %}
+            </a>
         </button>
         <div class="container">
             <div class="info-line">
@@ -73,5 +79,27 @@
         </div>
     </div>
 </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var sizeDropdown = document.getElementById('size-dropdown');
+        var selectedSizeInput = document.getElementById('selected-size');
+        var addToCartBtn = document.getElementById('add-to-cart-btn');
+
+        sizeDropdown.addEventListener('change', function() {
+            if (sizeDropdown.value !== "") {
+                addToCartBtn.removeAttribute('disabled');
+                selectedSizeInput.value = sizeDropdown.value;
+            } else {
+                addToCartBtn.setAttribute('disabled', 'disabled');
+                selectedSizeInput.value = '';
+            }
+        });
+
+        if (sizeDropdown.value === "") {
+            addToCartBtn.setAttribute('disabled', 'disabled');
+        }
+    });
+</script>
 
 {% endblock %}

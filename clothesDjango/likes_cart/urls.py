@@ -1,5 +1,6 @@
 from django.urls import path, include
 
+from clothesDjango.likes_cart.models import UpdateCartItemView
 from clothesDjango.likes_cart.views import ViewLikes, ViewCart, like_toggle, delete_cart_item, add_to_cart
 
 urlpatterns = [
@@ -7,5 +8,6 @@ urlpatterns = [
     path("add_to_cart/<int:pk_cloth>/", add_to_cart, name="add to cart"),
     path('my-likes/', ViewLikes.as_view(), name='view likes'),
     path('my-cart/', ViewCart.as_view(), name='view cart'),
-    path('my-cart/<int:pk_cart>/delete', delete_cart_item, name='delete cart item')
+    path('my-cart/<int:pk_cart>/delete', delete_cart_item, name='delete cart item'),
+    path('update_cart_item/<int:pk_cart>/', UpdateCartItemView.as_view(), name='update cart item'),
 ]

@@ -21,10 +21,15 @@
             <div class="cart-info">
                 <h6>{{ cart_item.cloth.name }}</h6>
                 <p>{{ cart_item.cloth.description }}</p>
-                <p>Price: {{ cart_item.cloth.price }}</p>
+                <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
                 <p>Size: {{ cart_item.size }}</p>
                 <p>Color: {{ cart_item.cloth.color }}</p>
-                <p>Quantity: TODO</p>
+                <form method="POST" action="{% url 'update cart item' pk_cart=cart_item.pk %}">
+                    {% csrf_token %}
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" style='{{ 'width:40px' }}' value="{{ cart_item.quantity }}" min="1">
+                    <button type="submit" class="cart-button" style="{{ 'padding:0px' }}">Update</button>
+                </form>
                 <button class="cart-button">
                     <a href="{% url 'delete cart item' pk_cart=cart_item.pk %}" class="cart-button-link">Delete</a>
                 </button>
@@ -32,16 +37,17 @@
                     <a href="{% url 'show product details' cart_item.cloth.pk %}" class="cart-button-link" id="current-{{ cart_item.cloth.id }}">Show product details</a>
                 </button>
             </div>
+            <p style="{{ 'position:relative; top:6vw; left:10vh' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
         </li>
         {% empty %}
-        <li class="cart-item">Your cart is empty</li>
+        <li class="cart-item" style="{{ 'text-align:center' }}">Your cart is empty</li>
         {% endfor %}
     </ul>
     <div class="cart-summary">
         <hr>
         <h2>Summary</h2>
         <hr>
-        <p>Total price of the products: TODO</p>
+        <p>Total price of the products: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">{{ total_price }} BGN </small> </p>
         <hr>
         <p>Estimated delivery time: 3-5 days</p>
         <button class="cart-order-button">MAKE AN ORDER</button>

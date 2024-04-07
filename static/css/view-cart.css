@@ -105,3 +105,13 @@
     margin: 20px auto;
     width:50%
 }
+
+.price-product-p {
+    text-align: right;
+}
+
+.cart-item .price-product-p .price-product-small {
+    color: pink; /* Set text color to pink */
+    font-weight: bold; /* Make text bold */
+    font-size: larger; /* Increase font size */
+}

@@ -32,8 +32,8 @@ INSTALLED_APPS = [
     'clothesDjango.common',
     'clothesDjango.catalogue',
     'clothesDjango.accounts',
-    'clothesDjango.orders',
-    'clothesDjango.likes_cart'
+    'clothesDjango.likes_cart',
+    'clothesDjango.orders'
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,8 @@ DATABASES = {
         'USER': 'postgres-user',
         'PASSWORD': 'postgres-password',
         'HOST': '127.0.0.1',
-        'PORT': '5432'}
+        'PORT': '5432'
+    }
 }
 
 

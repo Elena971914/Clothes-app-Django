@@ -8,7 +8,8 @@ urlpatterns = [
     path('', include('clothesDjango.common.urls')),
     path('shop/', include('clothesDjango.catalogue.urls')),
     path('accounts/', include('clothesDjango.accounts.urls')),
-    path('favourites/', include('clothesDjango.likes_cart.urls'))
+    path('favourites/', include('clothesDjango.likes_cart.urls')),
+    path('orders/', include('clothesDjango.orders.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
