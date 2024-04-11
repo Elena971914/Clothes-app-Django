@@ -6,8 +6,9 @@
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/product-details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product-details.css' %}">
     <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,10 +16,12 @@
 
 <div class="product-details-container">
     <div class="product-images">
+        {% if cloth.photo %}
         <div class="image-grid">
             <img src="{{ cloth.photo.url }}" alt="Product Image">
 {#            TODO: MAKE BETTER LAYOUT #}
         </div>
+        {% endif %}
     </div>
     <div class="product-info">
         <h2 class="product-name">{{ cloth.name }}</h2>
@@ -77,10 +80,43 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
+    {# TODO FIX STYLE #}
+<div class="row" style="{{ 'justify-content:center; ' }}">
+    {% for cloth in previously_viewed_clothes %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="box">
+            <a href="{% url 'show product details' cloth.pk %}" id="current-{{ cloth.id }}">
+              <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
+                {% if cloth.photo %}
+                        <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:275px' }}">
+                {% endif %}
+              </div>
+              <div class="detail-box">
+                <h6>{{ cloth.name }}</h6>
+                <h6>PRICE<span> {{ cloth.price }} BGN</span>
+                </h6>
+              </div>
 
-    <script>
+            </a>
+          <div class="buttons-like-cart">
+              <button class="cart-btn">
+                  <a  href="{% url 'add to cart' pk_cloth=cloth.pk %}">
+                <i class="fas fa-shopping-cart"></i>
+                  </a>
+              </button>
+              <button class="heart-btn">
+                  <a href="{% url 'like' pk_cloth=cloth.pk %}">
+                      <i class="fas fa-heart"></i>
+                  </a>
+              </button>
+            </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         var sizeDropdown = document.getElementById('size-dropdown');
         var selectedSizeInput = document.getElementById('selected-size');

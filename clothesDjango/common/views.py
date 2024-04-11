@@ -1,13 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.urls import reverse
-
 from .models import Newsletter, Testimonial
 from .forms import NewsletterForm, TestimonialForm
-
-
-from django.http import HttpResponseRedirect
 
 
 def index(request):

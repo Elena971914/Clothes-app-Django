@@ -102,3 +102,67 @@
   font-size: 24px;
   margin-right: 10px;
 }
+
+.pr-details-row {
+  margin-bottom: 20px;
+}
+
+.pr-details-box {
+  background-color: #eeeeee;
+  position: relative;
+  padding: 10px;
+  margin-top: 25px;
+}
+
+.pr-details-box a {
+  color: black;
+}
+
+.pr-details-img-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  height: 270px;
+}
+
+.pr-details-img-box img {
+  max-width: 100%;
+}
+
+.pr-details-detail-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pr-details-detail-box h6 span {
+  color: #0b2e13 ;
+}
+
+.pr-details-new {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  font-size: 15px;
+}
+
+.pr-details-buttons-like-cart {
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+}
+
+.pr-details-cart-btn a {
+  /* Your button styles here */
+}
+
+.pr-details-heart-btn a {
+  /* Your button styles here */
+}
