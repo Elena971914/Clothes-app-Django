@@ -1,11 +1,12 @@
+from django.contrib.auth.decorators import permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
-from clothesDjango.catalogue.forms import SearchForm
+from clothesDjango.catalogue.forms import SearchForm, AddClothForm
 from clothesDjango.catalogue.models import Cloth
-from clothesDjango.common.forms import NewsletterForm
 
 
 def show_shop(request):
@@ -42,3 +43,10 @@ def show_product_details(request, pk):
         'cloth': cloth,
     }
     return render(request, 'product-details.html', context)
+
+
+class AddCloth(CreateView):
+    template_name = 'add-cloth.html'
+    form_class = AddClothForm
+    success_url = reverse_lazy('shop')
+

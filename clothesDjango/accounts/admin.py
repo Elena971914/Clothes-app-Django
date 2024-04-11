@@ -1,13 +1,19 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
 
 
 @admin.register(UserModel)
-class AdminUser(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'email']
-    search_fields = ['first_name', 'last_name', 'email']
-#
-#     def get_all_orders(self):
-#         return ', '.join([o.name for o in self.orders.all()])
+class CustomUserAdmin(UserAdmin):
+    list_display = ['username', 'first_name', 'last_name', 'email', 'is_staff']
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups')}),  # Removed 'user_permissions'
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    search_fields = ['username', 'first_name', 'last_name', 'email']
+
+

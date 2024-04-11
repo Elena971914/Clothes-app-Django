@@ -2,16 +2,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:40px auto;
+    margin: 40px auto;
     width: 40vw;
-    color: #564f4f
 }
 
 .testimonial-form p {width: 100%}
 .testimonial-form input,
 .testimonial-form textarea {
-    width: 100%; /* Set all input fields and textareas to 100% width */
-    margin-bottom: 10px; /* Add some spacing between fields */
+    width: 100%;
+    margin-bottom: 10px;
+    border: 3px solid #f9ece6;
+    padding: 4px 10px;
+    border-radius: 6px;
 }
 
 .testimonial-form button {
@@ -21,11 +23,33 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Add transition effect */
+    transition: background-color 0.3s, transform 0.3s; /* Added transition for transform */
+    transform: scale(1); /* Initial scale set to 1 */
 }
 
 .testimonial-form button:hover {
-    background-color: #d97485; /* Change background color on hover */
+    background-color: #d97485;
+    transform: scale(1.1); /* Scaling effect on hover */
 }
 
+
+
+.testimonial-form input[type="text"]:hover,
+.testimonial-form input[type="text"]:focus,
+.testimonial-form input[type="email"]:hover,
+.testimonial-form input[type="email"]:focus,
+.testimonial-form textarea:hover,
+.testimonial-form textarea:focus,
+.testimonial-form input[type="checkbox"]:hover,
+.testimonial-form input[type="checkbox"]:focus,
+.testimonial-form select:hover,
+.testimonial-form select:focus {
+    transform: scale(1.05);
+}
+
+.testimonial-form input[type="text"]:focus,
+.testimonial-form input[type="email"]:focus,
+.testimonial-form textarea:focus {
+    background-color: #f9ece6;
+}
 

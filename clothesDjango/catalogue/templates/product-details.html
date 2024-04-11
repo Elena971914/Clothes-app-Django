@@ -53,7 +53,7 @@
             {% csrf_token %}
             <button type="submit" class="cart-order-button" id="add-to-cart-btn" style="{{ 'color:gray; background-color:#f9ece6; width:90%' }}" disabled>Add to Cart</button>
         </form>
-        <button id='like-button' class="cart-order-button" style="{{ 'color:gray; background-color:#f9ece6; display:inline-block; width:45%' }}">
+        <button id='like-button' class="cart-order-button" style="{{ 'color:gray; background-color:#f9ece6; display:inline-block; width:45%' }}" onmouseover="{{ 'background-color:pink' }}">
             <a href="{%  url 'like' pk_cloth=cloth.pk %}" style="{{ 'color:gray' }}">
                 {% if request.session.is_liked %}
                     Remove from wishlist

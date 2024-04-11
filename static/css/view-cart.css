@@ -96,7 +96,7 @@
 
 
 .cart-container p {
-    margin: 4px 0; /* Adjusted margin */
+    margin: 4px 0;
 }
 
 .cart-summary hr {
@@ -111,7 +111,7 @@
 }
 
 .cart-item .price-product-p .price-product-small {
-    color: pink; /* Set text color to pink */
-    font-weight: bold; /* Make text bold */
-    font-size: larger; /* Increase font size */
+    color: pink;
+    font-weight: bold;
+    font-size: larger;
 }

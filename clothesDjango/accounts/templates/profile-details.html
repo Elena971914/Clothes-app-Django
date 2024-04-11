@@ -2,57 +2,60 @@
 {% load static %}
 
 {% block title %}
-    Profile Details
+  Profile Details
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
+  <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="header">
-    {# TODO: VERIFY IF WORKS#}
-    {% if request.user.get_full_name %}
-        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
-    {% else %}
-        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
-    {% endif %}
-
+  {% if request.user.get_full_name %}
+    <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+  {% else %}
+    <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+  {% endif %}
 </div>
+
+{% if orders %}
 <section class="order-history">
-    {# TODO:ORDERS #}
   <h2 class="order-history-title">Last order</h2>
   <table class="order-history-table">
     <thead>
       <tr>
-        <th>Поръчка №</th>
-        <th>Дата на поръчка</th>
-        <th>Сума</th>
-        <th>Статус на поръчката</th>
-        <th>Подробности</th>
+        <th>Order №</th>
+        <th>Date of purchase</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Details</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>BGM000822474</td>
-        <td>25.01.2024</td>
-        <td>170,34 лв</td>
-        <td>Изпратено</td>
-        <td><a href="#" class="order-details-link">Виж подробностите</a></td>
-      </tr>
-      <!-- Additional order history rows can go here -->
+      {% for order in orders %}
+        <tr class="order-row">
+          <td>{{ order.pk }}</td>
+          <td>{{ order.date_of_purchase }}</td>
+          <td>{{ order.calculate_total_price }} BGN</td>
+          <td>{{ order.status }}</td>
+          <td><a href="{% url 'order details' pk=order.pk %}" class="order-details-link">Details</a></td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
-    <a href="#" class="view-all-orders-button">View All Orders</a>
+  <a href="#" class="view-all-orders-button">View All Orders</a>
 </section>
-    <div class="separator"></div>
+{% endif %}
+
+<div class="separator"></div>
+
 <section class="profile-info">
   <h2 class="profile-info-title">My data</h2>
   <div class="profile">
     <h3 class="shipping-address-title">Personal details</h3>
-  {% if request.user.get_full_name %}
-      <p class="shipping-address-info"><b>{{ request.user.get_full_name}}</b></p>
+    {% if request.user.get_full_name %}
+      <p class="shipping-address-info"><b>{{ request.user.get_full_name }}</b></p>
     {% endif %}
     {% if request.user.email %}
       <p class="profile-email">Email: <b>{{ request.user.email }}</b></p>
@@ -68,22 +71,49 @@
   </div>
   {% if request.user.address %}
     <div class="shipping-address">
-  <h3 class="shipping-address-title">Delivery address</h3>
-  {% if request.user.address %}
-    <p class="shipping-address-info">Address: <b>{{ request.user.address }}</b></p>
-  {% endif %}
-  {% if request.user.city %}
-    <p class="shipping-address-info">City: <b>{{ request.user.city }}</b></p>
-  {% endif %}
-  {% if request.user.postal_code %}
-    <p class="shipping-address-info">Postal code: <b>{{ request.user.postal_code }}</b></p>
-  {% endif %}
-  <p class="shipping-address-info">Country: <b>Bulgaria</b></p>
-</div>
-
+      <h3 class="shipping-address-title">Delivery address</h3>
+      {% if request.user.address %}
+        <p class="shipping-address-info">Address: <b>{{ request.user.address }}</b></p>
+      {% endif %}
+      {% if request.user.city %}
+        <p class="shipping-address-info">City: <b>{{ request.user.city }}</b></p>
+      {% endif %}
+      {% if request.user.postal_code %}
+        <p class="shipping-address-info">Postal code: <b>{{ request.user.postal_code }}</b></p>
+      {% endif %}
+      <p class="shipping-address-info">Country: <b>Bulgaria</b></p>
+    </div>
   {% endif %}
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const viewAllOrdersButton = document.querySelector('.view-all-orders-button');
+    const orderRows = document.querySelectorAll('.order-row');
+    let allOrdersShown = false;
 
+    for (let i = 1; i < orderRows.length; i++) {
+      orderRows[i].style.display = 'none';
+    }
+
+    viewAllOrdersButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (allOrdersShown) {
+        // Hide all orders except the first one
+        for (let i = 0; i < orderRows.length - 1; i++) {
+          orderRows[i].style.display = 'none';
+        }
+        viewAllOrdersButton.textContent = 'View All Orders';
+      } else {
+        // Show all orders
+        orderRows.forEach(function (row) {
+          row.style.display = 'table-row';
+        });
+        viewAllOrdersButton.textContent = 'Show Only Last Order';
+      }
+      allOrdersShown = !allOrdersShown;
+    });
+  });
+</script>
 
 {% endblock %}

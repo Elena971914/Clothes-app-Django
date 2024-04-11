@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ cloth.name }}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/order-create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="cart-container" style="{{ 'padding:20px 80px' }}">
+        <div class="testimonial-form">
+            <h2 class="">Order details</h2>
+            <form method="POST" action="{% url 'confirm order' %}">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button type="submit">Submit order data</button>
+            </form>
+        </div>
+        <ul class='cart-list' style="{{ 'margin-top:80px' }}">
+        <h1 class="text-center layout_padding2-top">Items</h1>
+        <p class="text-center">Total price of the products: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">{{ total_price }} BGN </small> </p>
+            {% for cart_item in request.user.cart_set.all %}
+                <li class="cart-item" style="">
+                <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img" style="{{ 'height:20vh' }}">
+                <div class="cart-info">
+                    <h6>{{ cart_item.cloth.name }}</h6>
+                    <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
+                    <p>Size: {{ cart_item.size }}</p>
+                    <p>Color: {{ cart_item.cloth.color }}</p>
+                    <p>Quantity: {{ cart_item.quantity }}</p>
+                </div>
+            <p style="{{ 'position:relative; top:6vh; left:8vw' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
+        </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

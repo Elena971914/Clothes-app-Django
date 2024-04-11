@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Order Preview
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/order-confirm.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if order_confirmed %}
+        <div class="container text-center layout_padding">
+    <h1>Order Confirmed!</h1>
+        <hr>
+    <h6>Your order has been successfully confirmed:</h6>
+        <hr>
+        <table class='order-table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price (BGN)</th>
+              <th>Quantity</th>
+              <th>Size</th>
+              <th>Color</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cart in order.carts.all %}
+            <tr>
+              <td>{{ cart.cloth.name }}</td>
+              <td>{{ cart.subtotal }}</td>
+              <td>{{ cart.quantity }}</td>
+              <td>{{ cart.size }}</td>
+              <td>{{ cart.cloth.color }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <hr>
+            <div class="order-details">
+            <h1>Total price: <span class="highlighted">{{ order.calculate_total_price }} BGN</span></h1>
+    <p>Order ID: <span class="highlighted">{{ order.pk }}</span></p>
+    <p>We will reach you on <span class="highlighted">{{ order.user.email }}</span> or <span class="highlighted">{{ order.phone }}</span></p>
+    <p>Estimated delivery: 3-5 days</p>
+    {% if order.is_personal_address %}
+        <p>To your personal address: <span class="highlighted">{{ order.delivery_address }}, {{ order.city }}, {{ order.postal_code }}</span></p>
+    {% else %}
+        <p>To delivery office on address: <span class="highlighted">{{ order.delivery_address }}, {{ order.city }}, {{ order.postal_code }}</span></p>
+    {% endif %}
+</div>
+
+        </div>
+        {% else %}
+        <div class="cart-summary">
+            <h1>Unfortunately...</h1>
+            <h3>An error occurred and your order wasn't saved...</h3>
+            <button class="cart-order-button">
+            <a href="{% url 'create order' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
+                Try again!
+            </a>
+        </button>
+        </div>
+{% endif %}
+
+{% endblock %}
+
+
+{# TODO: ADD DELIVERY COSTS AND AGREE TO TERMS; CHANGE THE PROFILE ORDERS;
+REMAKE THE CLASSES IN THE PRODUCT DETAILS; CSS AND RESPONSIVE..
+FOOTER; LOGIN REQUIRED-TESTIMONIAL;
+MORE CUSTOM ADMIN OPTIONS; MORE ADMIN GROUPS;
+ERROR SAFETY; VALIDATION;  #}

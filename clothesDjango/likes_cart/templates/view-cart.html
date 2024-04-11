@@ -50,7 +50,11 @@
         <p>Total price of the products: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">{{ total_price }} BGN </small> </p>
         <hr>
         <p>Estimated delivery time: 3-5 days</p>
-        <button class="cart-order-button">MAKE AN ORDER</button>
+        <button class="cart-order-button">
+            <a href="{% url 'create order' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
+                MAKE AN ORDER
+            </a>
+        </button>
     </div>
 </div>
 

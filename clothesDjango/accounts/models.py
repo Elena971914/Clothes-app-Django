@@ -71,7 +71,13 @@ class MyUser(auth_models.AbstractUser):
 
 
 class AdminUser(MyUser):
-    pass
+    class Meta:
+        permissions = [
+            ("can_add_clothes", "Can add clothes"),
+        ]
+
+    def __str__(self):
+        return f"Admin: {self.username}"
 
 
 class ClientUser(MyUser):

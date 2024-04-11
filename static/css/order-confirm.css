@@ -1,0 +1,75 @@
+  .order-table {
+    border-collapse: collapse;
+    width: 50%;
+      margin: 0 auto
+  }
+  .order-table th,
+  .order-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #f9ece6;
+  }
+  .order-table th {
+    background-color: #f9ece6;
+  }
+  .order-table td {
+    background-color: #fff;
+  }
+.main-container  .order-details {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    margin: 30px auto;
+    width:60vw;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-details p {
+    margin: 5px 0;
+}
+
+.order-price p,
+.cancel-order p{
+    margin: 5px 0;
+}
+
+.order-details .highlighted {
+    font-weight: bold;
+    color: #db4f66;
+}
+
+.order-buttons {
+    display: block;
+    background-color: #db4f66;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 20px auto;
+    width:20vw;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    transform: scale(1);
+}
+
+.order-buttons:hover {
+    background-color: #d97485;
+    transform: scale(1.1);
+}
+
+.cancel-order {
+    text-align: center;
+    margin: 10px 100px;
+}
+
+#cancel-message {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding:30px
+}

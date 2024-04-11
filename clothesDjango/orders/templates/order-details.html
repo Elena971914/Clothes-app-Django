@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    Order Details
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/order-confirm.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+  <div class="order-details">
+    <div class="order-info">
+      <p><span class="highlighted">Status:</span> {{ order.status }}</p>
+      <p><span class="highlighted">Date of purchase:</span> {{ order.date_of_purchase }}</p>
+      <p><span class="highlighted">ID:</span> {{ order.id }}</p>
+      <p><span class="highlighted">Delivery Address:</span> {{ order.delivery_address }}</p>
+      <p><span class="highlighted">Name:</span> {{ order.user.get_full_name }}</p>
+      <p><span class="highlighted">Postal Code:</span> {{ order.postal_code }}</p>
+      <p><span class="highlighted">City:</span> {{ order.city }}</p>
+      <p><span class="highlighted">Payment Method:</span> {{ order.payment_method }}</p>
+    </div>
+    <div class="order-price">
+      <h2>Total Price: {{ order.calculate_total_price }} BGN</h2>
+    </div>
+  </div>
+  <hr>
+  <div class="cart-items">
+    <table class='order-table'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price (BGN)</th>
+          <th>Quantity</th>
+          <th>Size</th>
+          <th>Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cart in order.carts.all %}
+        <tr>
+          <td>{{ cart.cloth.name }}</td>
+          <td>{{ cart.subtotal }}</td>
+          <td>{{ cart.quantity }}</td>
+          <td>{{ cart.size }}</td>
+          <td>{{ cart.cloth.color }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <hr>
+  <div class="cancel-order">
+    <button onclick="cancelOrder()" class="order-buttons">Cancel Order</button>
+    <div id="cancel-message" style="display: none;">
+        <p>
+            We will contact you on email and/or telephone to confirm the cancellation.
+        </p>
+        <p>
+            Refund will be processed within 2-3 weeks.
+        </p>
+        <p>
+            If the order has been sent the delivery costs are not going to be refunded, as it is stated in the Terms for Ordering and delivery.
+        </p>
+        <form action="{% url 'delete order' pk=order.pk %}" method="post">
+            {% csrf_token %}
+            <p>
+                Are you sure you want to cancel this order?<
+            </p>
+            <p>
+                This action cannot be undone.
+            </p>
+            <button type="submit" class="order-buttons">Confirm cancellation</button>
+            <button class="order-buttons" style="{{ 'background-color:#f9ece6; display:block; border: 1px solid gray' }}">
+                <a href="{% url 'show user profile' pk=request.user.pk%}" style="{{ 'color:gray' }}">Return to profile</a>
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
+<script>
+    function cancelOrder() {
+        var cancelMessage = document.getElementById("cancel-message");
+
+        if (cancelMessage.style.display === "none" || cancelMessage.style.display === "") {
+            cancelMessage.style.display = "block";
+        } else {
+            cancelMessage.style.display = "none";
+        }
+    }
+</script>
+
+
+{% endblock %}

@@ -53,12 +53,11 @@
   display: inline-block;
   padding: 10px 20px;
   margin-top: 20px;
-  border: 2px solid #ff69b4; /* Pink border */
-  border-radius: 20px; /* Round corners */
-  background-color: #fff; /* White background */
-  color: #ff69b4; /* Pink text color */
-  text-decoration: none; /* Remove underline */
-  transition: all 0.3s ease; /* Smooth transition */
+  border-radius: 20px;
+  background-color: #db4f66;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
 
   /* Positioning */
   position: relative;
@@ -68,8 +67,9 @@
 
 /* Hover effect */
 .view-all-orders-button:hover {
-  background-color: #ff69b4; /* Pink background */
-  color: #fff; /* White text color */
+  background-color: #d97182;
+  color: #fff;
+  padding: 12px 22px;
 }
 
 /* Adjusting button within container */

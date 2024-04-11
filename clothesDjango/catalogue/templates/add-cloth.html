@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ cloth.name }}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form method="post" class="testimonial-form" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Add Item</button>
+    </form>
+{% endblock %}

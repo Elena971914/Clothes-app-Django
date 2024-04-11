@@ -24,11 +24,7 @@ class Cloth(models.Model):
         ('TOP', 'top'),
         ('UNDERWEAR', 'underwear'),
     ]
-    photo_1 = models.ImageField(validators=[image_size_validator], null=True, blank=True)
-    photo_2 = models.ImageField(validators=[image_size_validator], null=True, blank=True)
-    photo_3 = models.ImageField(validators=[image_size_validator], null=True, blank=True)
-    photo_4 = models.ImageField(validators=[image_size_validator], null=True, blank=True)
-    photo_5 = models.ImageField(validators=[image_size_validator], null=True, blank=True)
+
     type = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES
@@ -51,7 +47,8 @@ class Cloth(models.Model):
     )
     size = models.CharField(
         max_length=100,
-        null=True
+        null=True,
+        blank=True
     )
     stocked_S = models.PositiveIntegerField(
         default=0
@@ -66,7 +63,8 @@ class Cloth(models.Model):
     photo = models.ImageField(
         null=True,
         blank=True,
-        upload_to='clothes_images'
+        upload_to='clothes_images',
+        validators=[image_size_validator]
     )
 
     def __str__(self):

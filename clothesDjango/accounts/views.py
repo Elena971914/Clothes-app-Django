@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView
 from clothesDjango.accounts.forms import RegisterUserForm, ProfileEditForm
 from clothesDjango.accounts.models import Profile
+from clothesDjango.orders.models import Order
 
 UserModel = get_user_model()
 
@@ -52,8 +53,9 @@ class ProfileDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # TODO: orders
-        # context['pets'] = self.request.user.pet_set.all()
+        user = self.request.user
+        orders = Order.objects.filter(user=user).order_by('-date_of_purchase')
+        context['orders'] = orders
 
         return context
 

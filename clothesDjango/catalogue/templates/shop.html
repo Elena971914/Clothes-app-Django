@@ -29,7 +29,9 @@
           <div class="box">
             <a href="{% url 'show product details' cloth.pk %}" id="current-{{ cloth.id }}">
               <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
-                <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+                {% if cloth.photo %}
+                        <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+                {% endif %}
               </div>
               <div class="detail-box">
                 <h6>{{ cloth.name }}</h6>
@@ -41,11 +43,11 @@
               </div>
             </a>
           <div class="buttons-like-cart">
-{#              <button class="cart-btn">#}
-{#                  <a  href="{% url 'add to cart' pk_cloth=cloth.pk pk_user=request.user.pk %}">#}
-{#                <i class="fas fa-shopping-cart"></i>#}
-{#                  </a>#}
-{#              </button>#}
+              <button class="cart-btn">
+                  <a  href="{% url 'add to cart' pk_cloth=cloth.pk %}">
+                <i class="fas fa-shopping-cart"></i>
+                  </a>
+              </button>
               <button class="heart-btn">
                   <a href="{% url 'like' pk_cloth=cloth.pk %}">
                       <i class="fas fa-heart"></i>

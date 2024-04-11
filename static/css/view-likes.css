@@ -53,3 +53,7 @@
     margin: 140px;
     color: #db4f66;
 }
+
+li {
+    list-style: none;
+}
