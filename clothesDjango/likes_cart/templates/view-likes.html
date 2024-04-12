@@ -8,6 +8,7 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/shop.css' %}">
 <link rel="stylesheet" href="{% static 'css/view-likes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -54,6 +55,12 @@
                     </a>
                 </div>
             </div>
+            {% empty %}
+                <button class="cart-order-button">
+                    <a href="{% url 'shop' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
+                        View catalogue
+                    </a>
+                </button>
             {% endfor %}
         </div>
     </div>

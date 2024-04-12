@@ -1,3 +1,4 @@
+from _decimal import Decimal
 from django import views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Sum
@@ -8,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from clothesDjango.likes_cart.models import Cart
 from clothesDjango.orders.forms import OrderForm
-from clothesDjango.orders.models import Order
+from clothesDjango.orders.models import Order, CopiedCart
 
 
 class DisabledFormFieldsMixin:
@@ -72,7 +73,11 @@ class ConfirmOrder(View):
         form = OrderForm(request.user, request.POST)
         if form.is_valid():
             cart_items = Cart.objects.filter(user=request.user)
-            order = Order(
+            total_price = Decimal(0)
+            for cart_item in cart_items:
+                total_price += cart_item.subtotal()
+
+            order = Order.objects.create(
                 user=request.user,
                 phone=form.cleaned_data['phone'],
                 delivery_address=form.cleaned_data['delivery_address'],
@@ -80,10 +85,21 @@ class ConfirmOrder(View):
                 postal_code=form.cleaned_data['postal_code'],
                 is_personal_address=form.cleaned_data['is_personal_address'],
                 payment_method=form.cleaned_data['payment_method'],
-                comment=form.cleaned_data['comment']
+                comment=form.cleaned_data['comment'],
+                price=total_price
             )
-            order.save()
-            order.carts.set(cart_items)
+
+            for cart_item in cart_items:
+                CopiedCart.objects.create(
+                    cloth=cart_item.cloth,
+                    user=cart_item.user,
+                    size=cart_item.size,
+                    quantity=cart_item.quantity,
+                    order=order
+                )
+            cart_items.delete()
+
             return render(request, self.template_name, {'order': order, 'order_confirmed': True})
         else:
             return render(request, 'order-create.html', {'form': form, 'order_confirmed': False})
+

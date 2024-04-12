@@ -17,13 +17,13 @@
       <p><span class="highlighted">Date of purchase:</span> {{ order.date_of_purchase }}</p>
       <p><span class="highlighted">ID:</span> {{ order.id }}</p>
       <p><span class="highlighted">Delivery Address:</span> {{ order.delivery_address }}</p>
-      <p><span class="highlighted">Name:</span> {{ order.user.get_full_name }}</p>
+      <p><span class="highlighted">Name:</span> {{ order.user.first_name }} {{ order.user.last_name }}</p>
       <p><span class="highlighted">Postal Code:</span> {{ order.postal_code }}</p>
       <p><span class="highlighted">City:</span> {{ order.city }}</p>
       <p><span class="highlighted">Payment Method:</span> {{ order.payment_method }}</p>
     </div>
     <div class="order-price">
-      <h2>Total Price: {{ order.calculate_total_price }} BGN</h2>
+      <h2>Total Price: {{ order.price }} BGN</h2>
     </div>
   </div>
   <hr>
@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for cart in order.carts.all %}
+        {% for cart in order.copied_carts.all %}
         <tr>
           <td>{{ cart.cloth.name }}</td>
           <td>{{ cart.subtotal }}</td>

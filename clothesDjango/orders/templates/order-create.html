@@ -23,9 +23,13 @@
         </div>
         <ul class='cart-list' style="{{ 'margin-top:80px' }}">
         <h1 class="text-center layout_padding2-top">Items</h1>
-        <p class="text-center">Total price of the products: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">{{ total_price }} BGN </small> </p>
-            {% for cart_item in request.user.cart_set.all %}
-                <li class="cart-item" style="">
+        <p class="text-center">Total price of the products:
+            <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
+                {{ total_price }} BGN
+            </small>
+        </p>
+        {% for cart_item in request.user.cart_set.all %}
+            <li class="cart-item" style="">
                 <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img" style="{{ 'height:20vh' }}">
                 <div class="cart-info">
                     <h6>{{ cart_item.cloth.name }}</h6>
@@ -34,9 +38,9 @@
                     <p>Color: {{ cart_item.cloth.color }}</p>
                     <p>Quantity: {{ cart_item.quantity }}</p>
                 </div>
-            <p style="{{ 'position:relative; top:6vh; left:8vw' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
-        </li>
-            {% endfor %}
+                <p style="{{ 'position:relative; top:6vh; left:8vw' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
+            </li>
+        {% endfor %}
         </ul>
     </div>
 

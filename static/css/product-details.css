@@ -159,10 +159,6 @@
   margin-top: 45px;
 }
 
-.pr-details-cart-btn a {
-  /* Your button styles here */
-}
-
-.pr-details-heart-btn a {
-  /* Your button styles here */
+.recently-viewed-text {
+    color: #db4f66;
 }

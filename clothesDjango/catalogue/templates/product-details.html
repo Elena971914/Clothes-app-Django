@@ -2,119 +2,111 @@
 {% load static %}
 
 {% block title %}
-    {{ cloth.name }}
+  {{ cloth.name }}
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/product-details.css' %}">
-    <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
-    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+  <link rel="stylesheet" href="{% static 'css/product-details.css' %}">
+  <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/shop.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1 class="name">{{ cloth.type }}</h1>
+  <h1 class="name">{{ cloth.type }}</h1>
 
-<div class="product-details-container">
+  <div class="product-details-container">
     <div class="product-images">
-        {% if cloth.photo %}
+      {% if cloth.photo %}
         <div class="image-grid">
-            <img src="{{ cloth.photo.url }}" alt="Product Image">
-{#            TODO: MAKE BETTER LAYOUT #}
+          <img src="{{ cloth.photo.url }}" alt="Product Image">
+          {# TODO: MAKE BETTER LAYOUT #}
         </div>
-        {% endif %}
+      {% endif %}
     </div>
     <div class="product-info">
-        <h2 class="product-name">{{ cloth.name }}</h2>
-        <hr>
-        <p class="product-description">Type: {{ cloth.type }}</p>
-        {% if cloth.description %}
+      <h2 class="product-name">{{ cloth.name }}</h2>
+      <hr>
+      <p class="product-description">Type: {{ cloth.type }}</p>
+      {% if cloth.description %}
         <p class="product-description">{{ cloth.description }}</p>
-        {% endif %}
-        {% if cloth.material %}
+      {% endif %}
+      {% if cloth.material %}
         <p class="product-description">Material: {{ cloth.material }}</p>
-        {% endif %}
-        <p class="product-description">Color: {{ cloth.color }}</p>
-        <hr>
-        <h1>Price: {{ cloth.price }} BGN</h1>
-        <hr>
+      {% endif %}
+      <p class="product-description">Color: {{ cloth.color }}</p>
+      <hr>
+      <h1>Price: {{ cloth.price }} BGN</h1>
+      <hr>
+      {% if user.is_authenticated %}
         <form id="add-to-cart-form" method="post" action="{% url 'add to cart' pk_cloth=cloth.pk %}" style="{{ 'display:inline-block' }}">
-            <p class="product-size">Available sizes:
-                <select class="size-dropdown" name="size" id="size-dropdown">
-                    <option value="" disabled selected>Select a size:</option>
-                    {% if cloth.stocked_S %}
-                    <option value="S">S</option>
-                    {% endif %}
-                    {% if cloth.stocked_M %}
-                    <option value="M">M</option>
-                    {% endif %}
-                    {% if cloth.stocked_L %}
-                    <option value="L">L</option>
-                    {% endif %}
-                </select>
-            </p>
-            <input type="hidden" name="size" id="selected-size">
-            {% csrf_token %}
-            <button type="submit" class="cart-order-button" id="add-to-cart-btn" style="{{ 'color:gray; background-color:#f9ece6; width:90%' }}" disabled>Add to Cart</button>
+          <p class="product-size">Available sizes:
+            <select class="size-dropdown" name="size" id="size-dropdown">
+              <option value="" disabled selected>Select a size:</option>
+              {% if cloth.stocked_S %}
+                <option value="S">S</option>
+              {% endif %}
+              {% if cloth.stocked_M %}
+                <option value="M">M</option>
+              {% endif %}
+              {% if cloth.stocked_L %}
+                <option value="L">L</option>
+              {% endif %}
+            </select>
+          </p>
+          <input type="hidden" name="size" id="selected-size">
+          {% csrf_token %}
+          <button type="submit" class="cart-order-button" id="add-to-cart-btn" style="{{ 'color:gray; background-color:#f9ece6; width:90%' }}" disabled>Add to Cart</button>
         </form>
         <button id='like-button' class="cart-order-button" style="{{ 'color:gray; background-color:#f9ece6; display:inline-block; width:45%' }}" onmouseover="{{ 'background-color:pink' }}">
-            <a href="{%  url 'like' pk_cloth=cloth.pk %}" style="{{ 'color:gray' }}">
-                {% if request.session.is_liked %}
-                    Remove from wishlist
-                {% else %}
-                    Like
-                {% endif %}
-            </a>
+          <a href="{%  url 'like' pk_cloth=cloth.pk %}" style="{{ 'color:gray' }}">
+            {% if request.session.is_liked %}
+              Remove from wishlist
+            {% else %}
+              Like
+            {% endif %}
+          </a>
         </button>
-        <div class="container">
-            <div class="info-line">
-                  <span class="icon">&#128073;</span>
-                  <p>Expect your product to arrive in 3-5 working days.</p>
-                </div>
-                <div class="info-line">
-                  <span class="icon">&#127968;</span>
-                  <p>You get free delivery to your home or courier office of your choice.</p>
-                </div>
-                <div class="info-line">
-                  <span class="icon">&#128197;</span>
-                  <p>You can return the product in the next 100 days for free.</p>
-                </div>
-            </div>
+      {% endif %}
+      <div class="container">
+        <div class="info-line">
+          <span class="icon">&#128073;</span>
+          <p>Expect your product to arrive in 3-5 working days.</p>
         </div>
-</div>
-    {# TODO FIX STYLE #}
-<div class="row" style="{{ 'justify-content:center; ' }}">
-    {% for cloth in previously_viewed_clothes %}
+        <div class="info-line">
+          <span class="icon">&#127968;</span>
+          <p>You get free delivery to your home or courier office of your choice.</p>
+        </div>
+        <div class="info-line">
+          <span class="icon">&#128197;</span>
+          <p>You can return the product in the next 100 days for free.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <h2 class="text-center layout_padding2-bottom">Previously viewed items</h2>
+    <div class="row" style="{{ 'justify-content:center; ' }}">
+      {% for cloth in previously_viewed_clothes %}
         <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
+          <div class="box layout_padding2-bottom text-center">
             <a href="{% url 'show product details' cloth.pk %}" id="current-{{ cloth.id }}">
               <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
                 {% if cloth.photo %}
-                        <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:275px' }}">
+                  <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:275px' }}">
                 {% endif %}
               </div>
-              <div class="detail-box">
+              <div class="detail-box recently-viewed-text">
                 <h6>{{ cloth.name }}</h6>
                 <h6>PRICE<span> {{ cloth.price }} BGN</span>
                 </h6>
               </div>
-
             </a>
-          <div class="buttons-like-cart">
-              <button class="cart-btn">
-                  <a  href="{% url 'add to cart' pk_cloth=cloth.pk %}">
-                <i class="fas fa-shopping-cart"></i>
-                  </a>
-              </button>
-              <button class="heart-btn">
-                  <a href="{% url 'like' pk_cloth=cloth.pk %}">
-                      <i class="fas fa-heart"></i>
-                  </a>
-              </button>
-            </div>
-      </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-    </div>
+  {% endif %}
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

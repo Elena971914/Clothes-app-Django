@@ -28,12 +28,11 @@ class Cart(models.Model):
         on_delete=models.CASCADE
     )
     size = models.CharField(
-        max_length=2,  # Adjust the max_length as per your requirement
+        max_length=2,
         choices=[
             ('S', 'Small'),
             ('M', 'Medium'),
             ('L', 'Large'),
-            # Add more choices if needed
         ],
         default='S'
     )

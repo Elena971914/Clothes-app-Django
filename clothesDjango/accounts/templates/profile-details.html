@@ -37,7 +37,7 @@
         <tr class="order-row">
           <td>{{ order.pk }}</td>
           <td>{{ order.date_of_purchase }}</td>
-          <td>{{ order.calculate_total_price }} BGN</td>
+          <td>{{ order.price }} BGN</td>
           <td>{{ order.status }}</td>
           <td><a href="{% url 'order details' pk=order.pk %}" class="order-details-link">Details</a></td>
         </tr>
@@ -54,8 +54,8 @@
   <h2 class="profile-info-title">My data</h2>
   <div class="profile">
     <h3 class="shipping-address-title">Personal details</h3>
-    {% if request.user.get_full_name %}
-      <p class="shipping-address-info"><b>{{ request.user.get_full_name }}</b></p>
+    {% if request.user.first_name and request.user.last_name %}
+      <p class="shipping-address-info"><b>{{ request.user.first_name }} {{ request.user.last_name }}</b></p>
     {% endif %}
     {% if request.user.email %}
       <p class="profile-email">Email: <b>{{ request.user.email }}</b></p>
@@ -99,13 +99,11 @@
     viewAllOrdersButton.addEventListener('click', function (event) {
       event.preventDefault();
       if (allOrdersShown) {
-        // Hide all orders except the first one
         for (let i = 0; i < orderRows.length - 1; i++) {
           orderRows[i].style.display = 'none';
         }
         viewAllOrdersButton.textContent = 'View All Orders';
       } else {
-        // Show all orders
         orderRows.forEach(function (row) {
           row.style.display = 'table-row';
         });

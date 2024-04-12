@@ -20,7 +20,6 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    carts = models.ManyToManyField(Cart)
     phone = models.CharField(max_length=10, validators=[validate_phone_number])
     date_of_purchase = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Process')
@@ -37,6 +36,10 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='CASH')
     comment = models.TextField()
     agreed_to_terms = models.BooleanField(default=False)
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
 
     def save(self, *args, **kwargs):
         if (timezone.now() - self.date_of_purchase).days > 3:
@@ -45,8 +48,38 @@ class Order(models.Model):
             self.status = 'In Process'
         super().save(*args, **kwargs)
 
-    def calculate_total_price(self):
-        total_price = 0
-        for cart in self.carts.all():
-            total_price += cart.subtotal()
-        return total_price
+
+class CopiedCart(models.Model):
+    cloth = models.ForeignKey(
+        Cloth,
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
+    )
+    size = models.CharField(
+        max_length=2,
+        choices=[
+            ('S', 'Small'),
+            ('M', 'Medium'),
+            ('L', 'Large'),
+        ],
+        default='S'
+    )
+    quantity = models.PositiveIntegerField(
+        default=1
+    )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='copied_carts'
+    )
+
+    def subtotal(self):
+        return self.quantity * self.cloth.price
+
+    class Meta:
+        verbose_name = "Copied Cart"
+        verbose_name_plural = "Copied Carts"
+

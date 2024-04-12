@@ -32,3 +32,7 @@ def validate_phone_number(value):
         raise ValidationError('Invalid phone number format. Phone number should start with 0 or +359 '
                               'and be exactly 10 digits long.')
 
+
+def validate_numbers_only(value):
+    if not value.isdigit():
+        raise ValidationError('This field must contain numbers only.')

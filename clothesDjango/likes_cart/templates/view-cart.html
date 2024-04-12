@@ -39,14 +39,37 @@
             <p class="price-product-p">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
         </li>
         {% empty %}
-        <li class="cart-item" style="{{ 'text-align:center' }}">Your cart is empty</li>
+            <div class="layout_padding2 container text-center">
+                <h5>Your cart is empty</h5>
+                <hr>
+                <button class="cart-order-button">
+                    <a href="{% url 'view likes' %}" style="{{ 'color:white' }}">
+                        View liked items
+                    </a>
+                </button>
+                <button class="cart-order-button">
+                    <a href="{% url 'shop' %}" style="{{ 'color:white' }}">
+                        View catalogue
+                    </a>
+                </button>
+            </div>
         {% endfor %}
     </ul>
+    {% if total_price %}
     <div class="cart-summary">
         <hr>
         <h2>Summary</h2>
         <hr>
-        <p>Total price of the products: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">{{ total_price }} BGN </small> </p>
+        <p>Total price of the products:
+            <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
+                {% if total_price %}
+                    {{ total_price }}
+                {% else %}
+                    0
+                {% endif %}
+                BGN
+            </small>
+        </p>
         <hr>
         <p>Estimated delivery time: 3-5 days</p>
         <button class="cart-order-button">
@@ -54,7 +77,8 @@
                 MAKE AN ORDER
             </a>
         </button>
-    </div>
+        </div>
+    {% endif %}
 </div>
 
 

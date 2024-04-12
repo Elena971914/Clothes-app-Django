@@ -7,6 +7,7 @@
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/order-confirm.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -26,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for cart in order.carts.all %}
+            {% for cart in order.copied_carts.all %}
             <tr>
               <td>{{ cart.cloth.name }}</td>
               <td>{{ cart.subtotal }}</td>
@@ -39,7 +40,7 @@
         </table>
     <hr>
     <div class="order-details">
-        <h1>Total price: <span class="highlighted">{{ order.calculate_total_price }} BGN</span></h1>
+        <h1>Total price: <span class="highlighted">{{ order.price }} BGN</span></h1>
         <p>Order ID: <span class="highlighted">{{ order.pk }}</span></p>
         <p>We will reach you on <span class="highlighted">{{ order.user.email }}</span> or <span class="highlighted">{{ order.phone }}</span></p>
         <p>Estimated delivery: 3-5 days</p>
@@ -49,20 +50,12 @@
             <p>To delivery office on address: <span class="highlighted">{{ order.delivery_address }}, {{ order.city }}, {{ order.postal_code }}</span></p>
         {% endif %}
     </div>
+    <button class="cart-order-button">
+        <a href="{% url 'shop' %}" style="{{ 'color:white' }}">
+            Continue shopping!
+        </a>
+    </button>
 </div>
-{#        {% else %}#}
-{#        <div class="container text-center layout_padding">#}
-{#            <h1>Unfortunately...</h1>#}
-{#            <h3>An error occurred and your order wasn't saved...</h3>#}
-{#            <h3>Check again if the information you filled is valid!</h3>#}
-{#            {{ form.errors }}#}
-{#            <button class="order-buttons">#}
-{#            <a href="{% url 'create order' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">#}
-{#                Try again!#}
-{#            </a>#}
-{#        </button>#}
-{#        </div>#}
-
 
 {% endblock %}
 
