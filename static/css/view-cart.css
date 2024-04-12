@@ -17,6 +17,7 @@
     margin: 20px;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .cart-img {
@@ -108,10 +109,37 @@
 
 .price-product-p {
     text-align: right;
+    position: absolute;
+    right: 10px;
+    bottom: 20px
 }
 
 .cart-item .price-product-p .price-product-small {
     color: pink;
     font-weight: bold;
     font-size: larger;
+}
+
+@media only screen and (max-width: 1200px) {
+    .cart-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cart-list {
+        width: 70%
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .cart-list {
+        width: 100%
+    }
+}
+
+@media only screen and (max-width: 580px) {
+    .price-product-p {
+        left: 6px;
+        bottom: 6px;
+        right: auto;
+    }
 }

@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Testimonial(models.Model):
+    # TODO CHANGE USER
     author = models.CharField(
         max_length=50)
     email = models.EmailField(

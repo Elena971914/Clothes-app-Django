@@ -1,5 +1,6 @@
 from django import forms
 from .models import Order
+from ..accounts.validators import validate_letters_and_dashes, validate_phone_number
 
 
 class OrderForm(forms.Form):
@@ -7,12 +8,12 @@ class OrderForm(forms.Form):
         ('CARD', 'Card payment'),
         ('CASH', 'Cash on delivery'),
     )
-    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': 'First name of receiver'}))
-    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': 'Last name of receiver'}))
+    first_name = forms.CharField(max_length=30, validators=[validate_letters_and_dashes], error_messages={'invalid': 'Please enter a valid phone number.'}, widget=forms.TextInput(attrs={'placeholder': 'First name of receiver'}))
+    last_name = forms.CharField(max_length=30, validators=[validate_letters_and_dashes], widget=forms.TextInput(attrs={'placeholder': 'Last name of receiver'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    phone = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'placeholder': 'Phone number'}))
+    phone = forms.CharField(max_length=10, validators=[validate_phone_number],widget=forms.TextInput(attrs={'placeholder': 'Phone number'}))
     delivery_address = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Delivery address (street, number, building, entrance, etc.)'}))
-    city = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'City'}))
+    city = forms.CharField(max_length=100, validators=[validate_letters_and_dashes], widget=forms.TextInput(attrs={'placeholder': 'City'}))
     postal_code = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Postal code'}))
     payment_method = forms.ChoiceField(choices=PAYMENT_METHOD_CHOICES, initial='CASH')
     comment = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Additional comments (optional)'}), required=False)

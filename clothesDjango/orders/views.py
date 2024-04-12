@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Sum
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView, ListView, CreateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, DeleteView, FormView
 from django.shortcuts import render, redirect, get_object_or_404
 
 from clothesDjango.likes_cart.models import Cart
@@ -23,12 +23,12 @@ class DisabledFormFieldsMixin:
         return form
 
 
-class OrderDetails(DetailView):
+class OrderDetails(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'order-details.html'
 
 
-class DeleteOrder(DeleteView):
+class DeleteOrder(LoginRequiredMixin, DeleteView):
     model = Order
     template_name = 'order-details.html'
 
@@ -36,10 +36,9 @@ class DeleteOrder(DeleteView):
         return reverse_lazy('show user profile', kwargs={'pk': self.request.user.pk})
 
 
-class OrderCreate(LoginRequiredMixin, CreateView):
-    model = Order
+class OrderCreate(LoginRequiredMixin, FormView):
     template_name = 'order-create.html'
-    success_url = 'index'
+    success_url = reverse_lazy('confirm order')
 
     def get_form_class(self):
         return OrderForm
@@ -60,6 +59,10 @@ class OrderCreate(LoginRequiredMixin, CreateView):
         total_price = cart_items.aggregate(total_price=Sum('subtotal'))
         context['total_price'] = total_price['total_price']
         return context
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return redirect('create order', {'form': form})
 
 
 class ConfirmOrder(View):
@@ -83,4 +86,4 @@ class ConfirmOrder(View):
             order.carts.set(cart_items)
             return render(request, self.template_name, {'order': order, 'order_confirmed': True})
         else:
-            return render(request, self.template_name, {'form': form, 'order_confirmed': False})
+            return render(request, 'order-create.html', {'form': form, 'order_confirmed': False})

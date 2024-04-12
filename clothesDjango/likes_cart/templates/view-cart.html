@@ -20,7 +20,6 @@
             <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img">
             <div class="cart-info">
                 <h6>{{ cart_item.cloth.name }}</h6>
-                <p>{{ cart_item.cloth.description }}</p>
                 <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
                 <p>Size: {{ cart_item.size }}</p>
                 <p>Color: {{ cart_item.cloth.color }}</p>
@@ -37,7 +36,7 @@
                     <a href="{% url 'show product details' cart_item.cloth.pk %}" class="cart-button-link" id="current-{{ cart_item.cloth.id }}">Show product details</a>
                 </button>
             </div>
-            <p style="{{ 'position:relative; top:6vw; left:10vh' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
+            <p class="price-product-p">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
         </li>
         {% empty %}
         <li class="cart-item" style="{{ 'text-align:center' }}">Your cart is empty</li>

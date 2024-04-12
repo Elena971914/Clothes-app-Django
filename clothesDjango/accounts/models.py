@@ -4,7 +4,8 @@ from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
 
-from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes
+from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes, \
+    validate_phone_number, validate_no_spaces
 
 
 class MyUser(auth_models.AbstractUser):
@@ -13,7 +14,7 @@ class MyUser(auth_models.AbstractUser):
         unique=True,
         validators=[
             MinLengthValidator(4, message="Username must be at least 4 characters long."),
-            RegexValidator(r'^\S+$', message="Username cannot contain spaces.")
+            validate_no_spaces
         ]
     )
     email = models.EmailField(
@@ -32,12 +33,11 @@ class MyUser(auth_models.AbstractUser):
         blank=True
     )
     date_of_birth = models.DateField(
-        validators=[validate_age, validate_before_today],
         null=True,
         blank=True
     )
     phone_number = models.CharField(
-        validators=[MinLengthValidator(10)],
+        validators=[validate_phone_number],
         max_length=10,
         null=True,
         blank=True
@@ -58,14 +58,14 @@ class MyUser(auth_models.AbstractUser):
         'auth.Permission',
         verbose_name='user permissions',
         blank=True,
-        related_name='myuser_permissions',  # Unique related name
+        related_name='myuser_permissions',
         help_text='Specific permissions for this user.',
     )
     groups = models.ManyToManyField(
         'auth.Group',
         verbose_name='groups',
         blank=True,
-        related_name='myuser_groups',  # Unique related name
+        related_name='myuser_groups',
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
     )
 
@@ -78,10 +78,6 @@ class AdminUser(MyUser):
 
     def __str__(self):
         return f"Admin: {self.username}"
-
-
-class ClientUser(MyUser):
-    pass
 
 
 class Profile(models.Model):

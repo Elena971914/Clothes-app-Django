@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
+from clothesDjango.accounts.validators import validate_phone_number
 from clothesDjango.catalogue.models import Cloth
 from clothesDjango.likes_cart.models import Cart
 
@@ -20,7 +21,7 @@ class Order(models.Model):
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     carts = models.ManyToManyField(Cart)
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(max_length=10, validators=[validate_phone_number])
     date_of_purchase = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Process')
     delivery_address = models.CharField(max_length=100)
@@ -35,6 +36,7 @@ class Order(models.Model):
     is_personal_address = models.BooleanField(default=True)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='CASH')
     comment = models.TextField()
+    agreed_to_terms = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if (timezone.now() - self.date_of_purchase).days > 3:
