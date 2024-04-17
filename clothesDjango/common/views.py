@@ -2,10 +2,19 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Newsletter, Testimonial
 from .forms import NewsletterForm, TestimonialForm
+from ..catalogue.models import Cloth
 
 
 def index(request):
-    return render(request, 'index.html')
+    last_clothes = Cloth.objects.all()[:4]
+    testimonials = Testimonial.objects.all()[:3]
+
+    context = {
+        'last_clothes': last_clothes,
+        'testimonials': testimonials
+    }
+
+    return render(request, 'index.html', context)
 
 
 def show_why(request):
@@ -21,7 +30,7 @@ def show_testimonials(request):
 
     testimonial_form = TestimonialForm(request.POST or None, request.FILES or None)
     if testimonial_form.is_valid():
-        testimonial = testimonial_form.save()
+        testimonial = testimonial_form.save(commit=False)
         testimonial.user = request.user
         testimonial.save()
 
@@ -30,7 +39,7 @@ def show_testimonials(request):
     context = {
         'testimonial_form': testimonial_form,
         'all_testimonials': all_testimonials,
-   }
+    }
     return render(request, 'testimonial.html', context)
 
 

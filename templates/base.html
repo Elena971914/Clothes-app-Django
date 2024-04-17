@@ -28,7 +28,7 @@
 
   <!-- bootstrap core css -->
   <link type="text/css" href="{% static 'css/bootstrap.css' %}" rel="stylesheet"/>
-
+  <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet"/>
   <!-- Custom styles for this template -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
@@ -67,12 +67,18 @@
                   Publish new clothes
                 </a>
               </li>
-            {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'show all orders' %}">
+                  All orders
+                </a>
+              </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'why' %}">
                 Why Us
               </a>
             </li>
+          {% endif %}
               <li class="nav-item">
               <a class="nav-link" href="{% url 'add newsletter user' %}">
                 Newsletter
@@ -104,10 +110,10 @@
                 </div>
                 {% if request.user.is_authenticated %}
                 <div class="icon-wrapper">
-                    <a href="{% url 'view cart' %}"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                    <a href="{% url 'view cart' %}" class="text-black-50"><i class="fa fa-shopping-bag" aria-hidden="true"></i> My Cart</a>
                 </div>
                 <div class="icon-wrapper">
-                    <a href="{% url 'view likes' %}"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    <a href="{% url 'view likes' %}" class="text-black-50"><i class="fa fa-heart" aria-hidden="true"></i> Favourites</a>
                 </div>
                 {% endif %}
             </div>

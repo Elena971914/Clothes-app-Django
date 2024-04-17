@@ -69,6 +69,9 @@ class MyUser(auth_models.AbstractUser):
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
     )
 
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class AdminUser(MyUser):
     class Meta:

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  All orders
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+    <h1 class="header-title">All orders</h1>
+</div>
+
+{% if orders %}
+    <section class="order-history">
+  <h2 class="order-history-title">All orders</h2>
+  <table class="order-history-table">
+    <thead>
+      <tr>
+          <th>User email</th>
+        <th>Order №</th>
+        <th>Date of purchase</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr class="order-row">
+            <td>{{ order.user.email }}</td>
+          <td>{{ order.pk }}</td>
+          <td>{{ order.date_of_purchase }}</td>
+          <td>{{ order.price }} BGN</td>
+          <td>{{ order.status }}</td>
+          <td><a href="{% url 'order details' pk=order.pk %}" class="order-details-link">Details</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}

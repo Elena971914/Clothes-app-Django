@@ -20,3 +20,9 @@ class AddClothForm(forms.ModelForm):
         model = Cloth
         exclude = ('size',)
 
+
+class UpdateClothForm(forms.ModelForm):
+    class Meta:
+        model = Cloth
+        fields = ('stocked_S', 'stocked_M', 'stocked_L')
+

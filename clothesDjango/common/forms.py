@@ -10,9 +10,5 @@ class NewsletterForm(forms.Form):
 class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testimonial
-        fields = '__all__'
-        labels = {'text': 'Tell us your opinion. It matters!',
-                  'author': 'Your name',
-                  'phone': 'Telephone number for contact (Just in case)',
-                  'email': 'Your email'
-                  }
+        exclude = ('user',)
+        labels = {'text': 'Tell us your opinion. It matters!',}

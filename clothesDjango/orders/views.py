@@ -97,9 +97,24 @@ class ConfirmOrder(View):
                     quantity=cart_item.quantity,
                     order=order
                 )
+                cloth = cart_item.cloth
+                if cart_item.size == 'S':
+                    cloth.stocked_S -= cart_item.quantity
+                elif cart_item.size == 'M':
+                    cloth.stocked_M -= cart_item.quantity
+                elif cart_item.size == 'L':
+                    cloth.stocked_L -= cart_item.quantity
+                cloth.save()
             cart_items.delete()
 
             return render(request, self.template_name, {'order': order, 'order_confirmed': True})
         else:
             return render(request, 'order-create.html', {'form': form, 'order_confirmed': False})
 
+
+def show_all_orders(request):
+    orders = Order.objects.all()
+    context = {
+        'orders': orders
+    }
+    return render(request, 'show-all-orders.html', context)

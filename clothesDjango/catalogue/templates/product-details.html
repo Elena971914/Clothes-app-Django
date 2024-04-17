@@ -12,31 +12,31 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="name">{{ cloth.type }}</h1>
-
+  <h1 class="name">{{ cloth.name }}</h1>
   <div class="product-details-container">
     <div class="product-images">
-      {% if cloth.photo %}
         <div class="image-grid">
           <img src="{{ cloth.photo.url }}" alt="Product Image">
-          {# TODO: MAKE BETTER LAYOUT #}
+          <img src="{{ cloth.photo_2.url }}" alt="Product Image">
+          <img src="{{ cloth.photo_3.url }}" alt="Product Image">
+          <img src="{{ cloth.photo_4.url }}" alt="Product Image">
+          <img src="{{ cloth.photo_5.url }}" alt="Product Image">
+          <img src="{{ cloth.photo_6.url }}" alt="Product Image">
         </div>
-      {% endif %}
     </div>
     <div class="product-info">
-      <h2 class="product-name">{{ cloth.name }}</h2>
-      <hr>
-      <p class="product-description">Type: {{ cloth.type }}</p>
-      {% if cloth.description %}
+    {% if cloth.description %}
         <p class="product-description">{{ cloth.description }}</p>
       {% endif %}
+      <hr>
+      <p class="product-description">Type: {{ cloth.get_type_display }}</p>
       {% if cloth.material %}
         <p class="product-description">Material: {{ cloth.material }}</p>
       {% endif %}
       <p class="product-description">Color: {{ cloth.color }}</p>
       <hr>
       <h1>Price: {{ cloth.price }} BGN</h1>
-      <hr>
+    <hr>
       {% if user.is_authenticated %}
         <form id="add-to-cart-form" method="post" action="{% url 'add to cart' pk_cloth=cloth.pk %}" style="{{ 'display:inline-block' }}">
           <p class="product-size">Available sizes:
@@ -67,7 +67,15 @@
           </a>
         </button>
       {% endif %}
-      <div class="container">
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            <hr>
+            <div class="btn-box cart-order-button centered text-center"  style="width:100%">
+              <a href="{% url 'update cloth' pk=cloth.pk %}" class="text-center text-white centered">
+                Update Availability
+              </a>
+            </div>
+       {% else %}
+            <div class="container">
         <div class="info-line">
           <span class="icon">&#128073;</span>
           <p>Expect your product to arrive in 3-5 working days.</p>
@@ -81,6 +89,7 @@
           <p>You can return the product in the next 100 days for free.</p>
         </div>
       </div>
+        {% endif %}
     </div>
   </div>
 

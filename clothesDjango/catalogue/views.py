@@ -3,8 +3,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from clothesDjango.catalogue.forms import SearchForm, AddClothForm
+from django.views.generic import CreateView, UpdateView
+from clothesDjango.catalogue.forms import SearchForm, AddClothForm, UpdateClothForm
 from clothesDjango.catalogue.models import Cloth
 from django.core.cache import cache
 
@@ -48,7 +48,6 @@ def show_product_details(request, pk):
     if cloth.pk in previously_viewed:
         previously_viewed.remove(cloth.pk)
     previously_viewed.append(cloth.pk)
-    # TODO check if works correct with new user
     if len(previously_viewed) < 4:
         previously_viewed_slice = previously_viewed[:-1]
     else:
@@ -71,3 +70,11 @@ class AddCloth(CreateView):
     form_class = AddClothForm
     success_url = reverse_lazy('shop')
 
+
+class UpdateCloth(UpdateView):
+    template_name = 'add-cloth.html'
+    form_class = UpdateClothForm
+    success_url = reverse_lazy('shop')
+
+    def get_object(self, queryset=None):
+        return Cloth.objects.get(pk=self.kwargs['pk'])

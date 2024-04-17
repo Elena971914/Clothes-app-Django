@@ -1,19 +1,15 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 
+UserModel = get_user_model()
+
+
 class Testimonial(models.Model):
-    # TODO CHANGE USER
-    author = models.CharField(
-        max_length=50)
-    email = models.EmailField(
-        null=False,
-        blank=False
-    )
-    phone = models.CharField(
-        max_length=10,
-        null=True,
-        blank=True
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
     )
     text = models.TextField(
         blank=False,

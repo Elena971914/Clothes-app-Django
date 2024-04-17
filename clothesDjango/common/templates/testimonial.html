@@ -10,7 +10,7 @@
 {% block content %}
 
     {% if request.user.is_authenticated %}
-    <button id="toggleFormBtn" type="button" style="display: block; margin: 100px auto; color: #d7677a; transition: all 0.3s ease; border: 2px solid #d36f80; background-color: white; border-radius: 20px; padding: 12px 24px;" onmouseover="this.style.backgroundColor='#d97585'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+    <button id="toggleFormBtn" type="button" style="display: block; margin: 60px auto; color: #d7677a; transition: all 0.3s ease; border: 2px solid #d36f80; background-color: white; border-radius: 20px; padding: 12px 24px" onmouseover="this.style.backgroundColor='#d97585'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
     Show testimonial form
     </button>
     {% endif %}
@@ -23,7 +23,7 @@
 
   <!-- all testimonials -->
 
-  <section class="client_section layout_padding">
+  <section class="client_section layout_padding2">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
@@ -34,56 +34,61 @@
     <div class="container px-0">
       <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-            {% for testimonial in all_testimonials %}
-          <div class="carousel-item {% if forloop.last %}active{% endif %}">
-            <div class="box">
-              <div class="client_info">
-                <div class="client_name">
-                  <h5>
-                      {{ testimonial.author }}
-                  </h5>
-                  <h6>
-                      {{ testimonial.date_time }}
-                  </h6>
-                    <h6 class="stars">
-                        {% for _ in "12345" %}
-                            <span class="fa fa-star" style="color:
-                                    {% if forloop.counter <= testimonial.rating %}
-                                        orange{% else %}gray{% endif %}"></span>
-                        {% endfor %}
-                      {{ testimonial.rating }}
-                  </h6>
-                </div>
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-              </div>
-              <p>
-                  {{ testimonial.text }}
-              </p>
-                <div class="text-center"">
-                    {% if testimonial.photo %}
-                        <img src="{{ testimonial.photo.url }}" alt="Testimonial Photo" style="display: inline-block; max-width:60vw">
-                    {% endif %}
-                </div>
-                <div class="buttons-position" style="{{ 'text-align:center' }}">
-                    <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
-                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
-                            <i class="fa fa-edit"></i> Edit
-                        </button>
-                    </a>
-                    <a href="{% url 'delete testimonial' testimonial.pk %}" class="button-link" title="Delete">
-                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
-                            <i class="fa fa-trash"></i> Delete
-                        </button>
-                    </a>
-                </div>
-            </div>
-          </div>
-            {% endfor %}
+            {% if not all_testimonials %}
+                <h3 class="text-center layout_padding2">There are no testimonials yes..</h3>
+            {% else %}
+                {% for testimonial in all_testimonials %}
+
+                    <div class="box">
+                      <div class="client_info">
+                        <div class="client_name">
+                          <h5>
+                              {% if testimonial.user.first_name and testimonial.user.last_name %}
+                                {{ testimonial.user.get_full_name }}
+                              {% else %}
+                                {{ testimonial.user.email }}
+                              {% endif %}
+                          </h5>
+                          <h6>
+                              {{ testimonial.date_time }}
+                          </h6>
+                            <h6 class="stars">
+                                {% for _ in "12345" %}
+                                    <span class="fa fa-star" style="color:
+                                            {% if forloop.counter <= testimonial.rating %}
+                                                orange{% else %}gray{% endif %}"></span>
+                                {% endfor %}
+                              {{ testimonial.rating }}
+                          </h6>
+                        </div>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      </div>
+                      <p>
+                          {{ testimonial.text }}
+                      </p>
+                        <div class="text-center">
+                            {% if testimonial.photo %}
+                                <img src="{{ testimonial.photo.url }}" alt="Testimonial Photo" style="display: inline-block; max-width:60vw; max-height: 60vh">
+                            {% endif %}
+                        </div>
+                        <div class="buttons-position" style="{{ 'text-align:center' }}">
+                            <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
+                                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                                    <i class="fa fa-edit"></i> Edit
+                                </button>
+                            </a>
+                            <a href="{% url 'delete testimonial' testimonial.pk %}" class="button-link" title="Delete">
+                                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            {% endif %}
         </div>
         </div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- end all testimonials -->
