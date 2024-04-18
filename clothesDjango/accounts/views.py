@@ -20,15 +20,7 @@ class RegisterUserView(CreateView):
 
     def form_valid(self, form):
         result = super().form_valid(form)
-
         login(self.request, self.object)
-
-        # TODO
-        # Send email on successful register: Variant 1
-        # Not good one, only sends email when user is registered from the site,
-        # but not from the `admin`
-        # send_mail....
-
         return result
 
     def form_invalid(self, form):
@@ -41,6 +33,8 @@ class LoginUserView(auth_views.LoginView):
 
 
 def logout_user(request):
+    if 'previously_viewed' in request.session:
+        del request.session['previously_viewed']
     logout(request)
     return redirect('index')
 

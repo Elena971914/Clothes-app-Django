@@ -17,9 +17,9 @@
     padding: 0;
 }
 .container-news li:before {
-    content: '\2605'; /* Unicode for star icon */
-    color: #f0c419; /* Star icon color */
-    margin-right: 5px; /* Adjust spacing between icon and text */
+    content: '\2605';
+    color: #f0c419;
+    margin-right: 5px;
 }
 .content {
   margin-bottom: 20px;

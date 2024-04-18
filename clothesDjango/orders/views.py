@@ -1,5 +1,6 @@
 from _decimal import Decimal
 from django import views
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Sum
 from django.urls import reverse_lazy
@@ -66,7 +67,7 @@ class OrderCreate(LoginRequiredMixin, FormView):
         return redirect('create order', {'form': form})
 
 
-class ConfirmOrder(View):
+class ConfirmOrder(View, LoginRequiredMixin):
     template_name = 'order-confirm.html'
 
     def post(self, request):
@@ -112,6 +113,7 @@ class ConfirmOrder(View):
             return render(request, 'order-create.html', {'form': form, 'order_confirmed': False})
 
 
+@login_required
 def show_all_orders(request):
     orders = Order.objects.all()
     context = {

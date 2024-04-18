@@ -3,16 +3,12 @@
 
 {% block title %}Yell testimonials{% endblock %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
-{% endblock %}
-
 {% block content %}
 
     {% if request.user.is_authenticated %}
-    <button id="toggleFormBtn" type="button" style="display: block; margin: 60px auto; color: #d7677a; transition: all 0.3s ease; border: 2px solid #d36f80; background-color: white; border-radius: 20px; padding: 12px 24px" onmouseover="this.style.backgroundColor='#d97585'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
-    Show testimonial form
-    </button>
+        <button id="toggleFormBtn" type="button" style="display: block; margin: 60px auto; color: #d7677a; transition: all 0.3s ease; border: 2px solid #d36f80; background-color: white; border-radius: 20px; padding: 12px 24px" onmouseover="this.style.backgroundColor='#d97585'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+            Show testimonial form
+        </button>
     {% endif %}
 
     <form id="testimonialForm" class="testimonial-form" method="post" enctype="multipart/form-data" style="display: none;">
@@ -71,6 +67,7 @@
                                 <img src="{{ testimonial.photo.url }}" alt="Testimonial Photo" style="display: inline-block; max-width:60vw; max-height: 60vh">
                             {% endif %}
                         </div>
+                        {% if request.user == testimonial.user %}
                         <div class="buttons-position" style="{{ 'text-align:center' }}">
                             <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
                                 <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
@@ -83,6 +80,7 @@
                                 </button>
                             </a>
                         </div>
+                        {% endif %}
                     </div>
                   </div>
                 {% endfor %}

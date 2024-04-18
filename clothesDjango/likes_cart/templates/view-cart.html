@@ -2,85 +2,81 @@
 {% load static %}
 
 {% block title %}
-    {{ cloth.name }}
-{% endblock %}
-
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
+    My YELL Cart
 {% endblock %}
 
 {% block content %}
-    <h1 class="cart-heading">My Cart</h1>
+  <h1 class="cart-heading">My Cart</h1>
 
-<div class="cart-container">
+  <div class="cart-container">
     <ul class="cart-list">
+      {% if object_list %}
         <h3 class="cart-heading">Products</h3>
-        {% for cart_item in object_list %}
+      {% endif %}
+      {% for cart_item in object_list %}
         <li class="cart-item" >
-            <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img">
-            <div class="cart-info">
-                <h6>{{ cart_item.cloth.name }}</h6>
-                <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
-                <p>Size: {{ cart_item.size }}</p>
-                <p>Color: {{ cart_item.cloth.color }}</p>
-                <form method="POST" action="{% url 'update cart item' pk_cart=cart_item.pk %}">
-                    {% csrf_token %}
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" style='{{ 'width:40px' }}' value="{{ cart_item.quantity }}" min="1">
-                    <button type="submit" class="cart-button" style="{{ 'padding:0px' }}">Update</button>
-                </form>
-                <button class="cart-button">
-                    <a href="{% url 'delete cart item' pk_cart=cart_item.pk %}" class="cart-button-link">Delete</a>
-                </button>
-                <button class="cart-button">
-                    <a href="{% url 'show product details' cart_item.cloth.pk %}" class="cart-button-link" id="current-{{ cart_item.cloth.id }}">Show product details</a>
-                </button>
-            </div>
-            <p class="price-product-p">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
-        </li>
-        {% empty %}
-            <div class="layout_padding2 container text-center">
-                <h5>Your cart is empty</h5>
-                <hr>
-                <button class="cart-order-button">
-                    <a href="{% url 'view likes' %}" style="{{ 'color:white' }}">
-                        View liked items
-                    </a>
-                </button>
-                <button class="cart-order-button">
-                    <a href="{% url 'shop' %}" style="{{ 'color:white' }}">
-                        View catalogue
-                    </a>
-                </button>
-            </div>
-        {% endfor %}
+        <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img">
+        <div class="cart-info">
+          <h6>{{ cart_item.cloth.name }}</h6>
+          <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
+          <p>Size: {{ cart_item.size }}</p>
+          <p>Color: {{ cart_item.cloth.color }}</p>
+          <form method="POST" action="{% url 'update cart item' pk_cart=cart_item.pk %}">
+            {% csrf_token %}
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" style='{{ 'width:40px' }}' value="{{ cart_item.quantity }}" min="1">
+            <button type="submit" class="cart-button" style="{{ 'padding:0px' }}">Update</button>
+          </form>
+          <button class="cart-button">
+            <a href="{% url 'delete cart item' pk_cart=cart_item.pk %}" class="cart-button-link">Delete</a>
+          </button>
+          <button class="cart-button">
+            <a href="{% url 'show product details' cart_item.cloth.pk %}" class="cart-button-link" id="current-{{ cart_item.cloth.id }}">Show product details</a>
+          </button>
+        </div>
+        <p class="price-product-p">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
+      </li>
+      {% empty %}
+        <div class="container text-center">
+        <h5>Your cart is still empty!</h5>
+        <hr>
+        <button class="cart-order-button">
+          <a href="{% url 'view likes' %}" style="{{ 'color:white' }}">
+            View liked items
+          </a>
+        </button>
+        <button class="cart-order-button">
+          <a href="{% url 'shop' %}" style="{{ 'color:white' }}">
+            View catalogue
+          </a>
+        </button>
+      </div>
+      {% endfor %}
     </ul>
     {% if total_price %}
-    <div class="cart-summary">
-        <hr>
-        <h2>Summary</h2>
-        <hr>
-        <p>Total price of the products:
-            <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
-                {% if total_price %}
-                    {{ total_price }}
-                {% else %}
-                    0
-                {% endif %}
-                BGN
-            </small>
-        </p>
-        <hr>
-        <p>Estimated delivery time: 3-5 days</p>
-        <button class="cart-order-button">
-            <a href="{% url 'create order' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
-                MAKE AN ORDER
-            </a>
-        </button>
-        </div>
+        <div class="cart-summary">
+      <hr>
+      <h2>Summary</h2>
+      <hr>
+      <p>Total price of the products:
+        <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
+          {% if total_price %}
+          {{ total_price }}
+          {% else %}
+          0
+          {% endif %}
+          BGN
+        </small>
+      </p>
+      <hr>
+      <p>Estimated delivery time: 3-5 days</p>
+      <button class="cart-order-button">
+        <a href="{% url 'create order' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
+          MAKE AN ORDER
+        </a>
+      </button>
+    </div>
     {% endif %}
-</div>
-
-
+  </div>
 
 {% endblock %}

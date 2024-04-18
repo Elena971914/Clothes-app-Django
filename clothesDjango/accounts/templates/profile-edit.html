@@ -5,10 +5,6 @@
     Profile Details
 {% endblock %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/profile-edit.css' %}">
-{% endblock %}
-
 {% block content %}
     <div class="edit-form-container">
         <form method="post" action="{% url 'edit user profile' pk=request.user.pk %}">

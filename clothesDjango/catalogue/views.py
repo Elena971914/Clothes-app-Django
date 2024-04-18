@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 from clothesDjango.catalogue.forms import SearchForm, AddClothForm, UpdateClothForm
 from clothesDjango.catalogue.models import Cloth
@@ -42,7 +42,6 @@ def show_shop(request):
 
 def show_product_details(request, pk):
     cloth = Cloth.objects.get(pk=pk)
-
     previously_viewed = request.session.get('previously_viewed', [])
 
     if cloth.pk in previously_viewed:
@@ -54,7 +53,6 @@ def show_product_details(request, pk):
         previously_viewed_slice = previously_viewed[-4:-1]
 
     previously_viewed_clothes = Cloth.objects.filter(pk__in=previously_viewed_slice)
-
     request.session['previously_viewed'] = previously_viewed
 
     context = {
@@ -74,7 +72,9 @@ class AddCloth(CreateView):
 class UpdateCloth(UpdateView):
     template_name = 'add-cloth.html'
     form_class = UpdateClothForm
-    success_url = reverse_lazy('shop')
 
     def get_object(self, queryset=None):
         return Cloth.objects.get(pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse('show product details', kwargs={'pk': self.object.pk})

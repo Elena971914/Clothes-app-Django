@@ -1,4 +1,5 @@
-#id_is_personal_address {
+#id_is_personal_address,
+.testimonial-form input[type='checkbox'] #id_agreed_to_terms {
     width: 20px;
     display: inline-block;
 }

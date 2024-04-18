@@ -3,11 +3,6 @@
 
 {% block title %}Shop!{% endblock %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
-{% endblock %}
-
-
 {% block content %}
 
     <form method="POST" class="search-form">
@@ -16,66 +11,66 @@
         <button>Search!</button>
     </form>
 
-  <section class="shop_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-            Products
-        </h2>
+    <section class="shop_section layout_padding">
+        <div class="container">
+          <div class="heading_container heading_center">
+            <h2>
+                Products
+            </h2>
+          </div>
+          <div class="row">
+              {% for cloth in all_clothes %}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box" style="height:336px">
+                <a href="{% url 'show product details' cloth.pk %}" id="current-{{ cloth.id }}">
+                  <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
+                    {% if cloth.photo %}
+                            <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+                    {% endif %}
+                  </div>
+                  <div class="detail-box" style="padding-top:10px">
+                    <h6>{{ cloth.name }}</h6>
+                    <h6>PRICE <span>{{ cloth.price }} BGN</span>
+                    </h6>
+                  </div>
+                  <div class="new">
+                    <span>New</span>
+                  </div>
+                </a>
+              <div class="buttons-like-cart">
+                  <button class="heart-btn">
+                      <a href="{% url 'like' pk_cloth=cloth.pk %}">
+                          <i class="fas fa-heart"></i>
+                      </a>
+                  </button>
+                </div>
+          </div>
+        </div>
+                {% endfor %}
       </div>
-      <div class="row">
-          {% for cloth in all_clothes %}
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box" style="height:336px">
-            <a href="{% url 'show product details' cloth.pk %}" id="current-{{ cloth.id }}">
-              <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
-                {% if cloth.photo %}
-                        <img src="{{ cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
-                {% endif %}
-              </div>
-              <div class="detail-box" style="padding-top:10px">
-                <h6>{{ cloth.name }}</h6>
-                <h6>PRICE <span>{{ cloth.price }} BGN</span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>New</span>
-              </div>
-            </a>
-          <div class="buttons-like-cart">
-              <button class="heart-btn">
-                  <a href="{% url 'like' pk_cloth=cloth.pk %}">
-                      <i class="fas fa-heart"></i>
-                  </a>
-              </button>
-            </div>
-      </div>
-    </div>
-            {% endfor %}
-  </div>
-<div style="display: block; text-align: center; margin-top: 30px">
-    {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">&lt;</a>
-    {% else %}
-        <span style="font-size: 18px; color: black;">&lt;</span>
-    {% endif %}
-
-    {% for num in paginator.page_range %}
-        {% if num == page_obj.number %}
-            <span style="font-size: 24px; color: black; font-weight: bold;">{{ num }}</span>
+    <div style="display: block; text-align: center; margin-top: 30px">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">&lt;</a>
         {% else %}
-            <a href="?page={{ num }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">{{ num }}</a>
+            <span style="font-size: 18px; color: black;">&lt;</span>
         {% endif %}
-    {% endfor %}
 
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">&gt;</a>
-    {% else %}
-        <span style="font-size: 18px; color: black;">&gt;</span>
-    {% endif %}
-</div>
-</div>
-</section>
+        {% for num in paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span style="font-size: 24px; color: black; font-weight: bold;">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&search={{ search }}" style="font-size: 18px; color: black; text-decoration: none;">&gt;</a>
+        {% else %}
+            <span style="font-size: 18px; color: black;">&gt;</span>
+        {% endif %}
+    </div>
+    </div>
+    </section>
 
   <!-- end shop section -->
 

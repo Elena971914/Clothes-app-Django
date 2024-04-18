@@ -5,10 +5,6 @@
   All orders
 {% endblock %}
 
-{% block style %}
-  <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
-{% endblock %}
-
 {% block content %}
 
 <div class="header">
@@ -16,9 +12,9 @@
 </div>
 
 {% if orders %}
-    <section class="order-history">
-  <h2 class="order-history-title">All orders</h2>
-  <table class="order-history-table">
+    <section class="order-history layout_padding-bottom">
+    <h2 class="order-history-title">The orders of all users</h2>
+    <table class="order-history-table">
     <thead>
       <tr>
           <th>User email</th>

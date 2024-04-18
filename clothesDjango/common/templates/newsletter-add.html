@@ -1,19 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/newsletter.css' %}">
-{% endblock %}
-
 {% block title %}Subscribe to newsletter!{% endblock %}
 
 {% block content%}
-{% for obj in all_subscribed %}
-    <p>{{ obj.subscribed }}</p>
-{% endfor %}
 
-
-<div class="container-news">
+    <div class="container-news">
         <h2>Subscribe to Our Newsletter</h2>
         <p>By subscribing to our newsletter, you will receive:</p>
         <ul>
@@ -29,4 +21,5 @@
             <button class="button-footer">Subscribe!</button>
         </form>
     </div>
+
 {% endblock %}

@@ -5,12 +5,6 @@
   {{ cloth.name }}
 {% endblock %}
 
-{% block style %}
-  <link rel="stylesheet" href="{% static 'css/product-details.css' %}">
-  <link rel="stylesheet" href="{% static 'css/view-cart.css' %}">
-  <link rel="stylesheet" href="{% static 'css/shop.css' %}">
-{% endblock %}
-
 {% block content %}
   <h1 class="name">{{ cloth.name }}</h1>
   <div class="product-details-container">
@@ -93,7 +87,7 @@
     </div>
   </div>
 
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and previously_viewed_clothes%}
     <h2 class="text-center layout_padding2-bottom">Previously viewed items</h2>
     <div class="row" style="{{ 'justify-content:center; ' }}">
       {% for cloth in previously_viewed_clothes %}
