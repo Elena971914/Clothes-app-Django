@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-
 UserModel = get_user_model()
 
 
@@ -35,7 +34,6 @@ class Newsletter(models.Model):
         unique=True
     )
 
-    #TODO: edit the unsubscribe button functionality
 
 
 

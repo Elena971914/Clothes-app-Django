@@ -38,7 +38,7 @@ class MyUser(auth_models.AbstractUser):
     )
     phone_number = models.CharField(
         validators=[validate_phone_number],
-        max_length=10,
+        max_length=14,
         null=True,
         blank=True
     )

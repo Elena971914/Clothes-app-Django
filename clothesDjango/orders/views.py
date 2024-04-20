@@ -1,28 +1,23 @@
-from _decimal import Decimal
-from django import views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Sum
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView, ListView, CreateView, DeleteView, FormView
-from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import DetailView, DeleteView, FormView
+from django.shortcuts import render
 
 from clothesDjango.likes_cart.models import Cart
 from clothesDjango.orders.forms import OrderForm
 from clothesDjango.orders.models import Order, CopiedCart
 
 
-class DisabledFormFieldsMixin:
-    disabled_fields = ()
-
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-
-        for field in self.disabled_fields:
-            form.fields[field].widget.attrs['disabled'] = 'disabled'
-
-        return form
+def calculate_total_price(user):
+    """
+    Calculate the total price of the cart items for a given user.
+    """
+    cart_items = Cart.objects.filter(user=user).annotate(subtotal=F('cloth__price') * F('quantity'))
+    total_price = cart_items.aggregate(total_price=Sum('subtotal'))
+    return total_price['total_price']
 
 
 class OrderDetails(LoginRequiredMixin, DetailView):
@@ -57,26 +52,18 @@ class OrderCreate(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cart_items = Cart.objects.filter(user=self.request.user).annotate(subtotal=F('cloth__price') * F('quantity'))
-        total_price = cart_items.aggregate(total_price=Sum('subtotal'))
-        context['total_price'] = total_price['total_price']
+        context['total_price'] = calculate_total_price(self.request.user)
         return context
 
-    def form_invalid(self, form):
-        print(form.errors)
-        return redirect('create order', {'form': form})
 
-
-class ConfirmOrder(View, LoginRequiredMixin):
+class ConfirmOrder(LoginRequiredMixin, View):
     template_name = 'order-confirm.html'
 
     def post(self, request):
         form = OrderForm(request.user, request.POST)
         if form.is_valid():
             cart_items = Cart.objects.filter(user=request.user)
-            total_price = Decimal(0)
-            for cart_item in cart_items:
-                total_price += cart_item.subtotal()
+            total_price = calculate_total_price(request.user)
 
             order = Order.objects.create(
                 user=request.user,
@@ -108,9 +95,14 @@ class ConfirmOrder(View, LoginRequiredMixin):
                 cloth.save()
             cart_items.delete()
 
-            return render(request, self.template_name, {'order': order, 'order_confirmed': True})
+            return render(request, self.template_name, {'order': order})
+
         else:
-            return render(request, 'order-create.html', {'form': form, 'order_confirmed': False})
+            context = {
+                'form': form,
+                'total_price': calculate_total_price(request.user)
+            }
+            return render(request, 'order-create.html', context)
 
 
 @login_required

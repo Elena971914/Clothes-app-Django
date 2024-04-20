@@ -20,7 +20,7 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=10, validators=[validate_phone_number])
+    phone = models.CharField(max_length=14, validators=[validate_phone_number])
     date_of_purchase = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Process')
     delivery_address = models.CharField(max_length=100)

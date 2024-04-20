@@ -26,7 +26,7 @@ class OrderForm(forms.Form):
             attrs={'placeholder': 'Email'})
     )
     phone = forms.CharField(
-        max_length=10,
+        max_length=14,
         validators=[validate_phone_number],
         widget=forms.TextInput(
             attrs={'placeholder': 'Phone number'})

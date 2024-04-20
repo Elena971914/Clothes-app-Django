@@ -1,13 +1,12 @@
-/* Centering the content */
+
 .header,
 .order-history,
 .profile-info {
   text-align: center;
   margin: 40px auto;
-  max-width: 800px; /* Limiting the width of the content */
+  max-width: 800px;
 }
 
-/* Adjusting margins for titles */
 .header-title,
 .order-history-title,
 .profile-info-title,
@@ -15,7 +14,6 @@
   margin: 20px 0;
 }
 
-/* Styling for the table */
 .order-history-table {
   margin: 0 auto;
   border-collapse: collapse;
@@ -28,7 +26,6 @@
   border: 1px solid #ccc;
 }
 
-/* Styling for profile and shipping address sections */
 .profile,
 .shipping-address {
   display: inline-block;
@@ -48,7 +45,6 @@
   margin-top: 10px;
 }
 
-/* Button styles */
 .view-all-orders-button {
   display: inline-block;
   padding: 10px 20px;
@@ -59,32 +55,28 @@
   text-decoration: none;
   transition: all 0.3s ease;
 
-  /* Positioning */
   position: relative;
   bottom: -10px;
   left: 0;
 }
 
-/* Hover effect */
 .view-all-orders-button:hover {
   background-color: #d97182;
   color: #fff;
   padding: 12px 22px;
 }
 
-/* Adjusting button within container */
 .order-history {
   position: relative;
 }
 
 .separator {
   width: 70%;
-  height: 2px; /* Adjust height as needed */
-  background-color: #ccc; /* Color of the separator line */
-  margin: 20px auto; /* Adjust margin as needed */
+  height: 2px;
+  background-color: #ccc;
+  margin: 20px auto;
 }
 
-/* Responsive styles */
 @media screen and (max-width: 600px) {
   .header,
   .order-history,

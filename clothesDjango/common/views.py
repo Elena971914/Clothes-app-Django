@@ -1,13 +1,23 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 from django.shortcuts import render, redirect
 from .models import Newsletter, Testimonial
 from .forms import NewsletterForm, TestimonialForm
 from ..catalogue.models import Cloth
 
 
+def handler404(request, exception):
+    return render(request, '404.html', status=404)
+
+
 def index(request):
-    last_clothes = Cloth.objects.all()[:4]
-    testimonials = Testimonial.objects.all()[:3]
+    try:
+        last_clothes = Cloth.objects.all()[:4]
+        testimonials = Testimonial.objects.all()[:3]
+    except IndexError as e:
+        last_clothes = []
+        testimonials = []
 
     context = {
         'last_clothes': last_clothes,
@@ -27,7 +37,6 @@ def show_contacts(request):
 
 def show_testimonials(request):
     all_testimonials = Testimonial.objects.all()
-
     testimonial_form = TestimonialForm(request.POST or None, request.FILES or None)
     if testimonial_form.is_valid():
         testimonial = testimonial_form.save(commit=False)
@@ -63,8 +72,12 @@ def edit_testimonial(request, pk):
 
 @login_required()
 def delete_testimonial(request, pk):
-    testimonial = Testimonial.objects.get(pk=pk)
-    testimonial.delete()
+    try:
+        testimonial = Testimonial.objects.get(pk=pk)
+        testimonial.delete()
+    except ObjectDoesNotExist as e:
+        raise Http404("Subscription does not exist")
+
     return render(request, 'testimonial-delete.html')
 
 
@@ -96,9 +109,14 @@ def thank_you_newsletter(request, email):
 
 
 def stop_newsletter_subscription(request, email):
-    obj = Newsletter.objects.get(subscribed=email)
-    context = {
-        'ended_subscription': obj
-    }
-    obj.delete()
-    return render(request, 'newsletter-end-subscription.html', context)
+    try:
+        obj = Newsletter.objects.get(subscribed=email)
+        obj.delete()
+        context = {
+            'ended_subscription': obj
+        }
+        return render(request, 'newsletter-end-subscription.html', context)
+    except ObjectDoesNotExist as e:
+        raise Http404("Subscription does not exist")
+
+

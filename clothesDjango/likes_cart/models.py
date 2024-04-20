@@ -44,17 +44,4 @@ class Cart(models.Model):
         return self.quantity * self.cloth.price
 
 
-class UpdateCartItemView(View):
-    def post(self, request, pk_cart):
-        cart_item = get_object_or_404(Cart, pk=pk_cart)
 
-        quantity = int(request.POST.get('quantity', 0))
-        if quantity > 0:
-            cloth = cart_item.cloth
-            size = cart_item.size
-            if (size == 'L' and cloth.stocked_L >= quantity) or \
-                    (size == 'M' and cloth.stocked_M >= quantity) or \
-                    (size == 'S' and cloth.stocked_S >= quantity):
-                cart_item.quantity = quantity
-                cart_item.save()
-        return redirect('view cart')

@@ -1,9 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
-from clothesDjango.accounts.models import MyUser, Profile
-from clothesDjango.catalogue.models import Cloth
-
 UserModel = get_user_model()
 
 
@@ -15,10 +12,8 @@ class RegisterUserForm(auth_forms.UserCreationForm):
 
 class ProfileEditForm(forms.ModelForm):
     def clean_username(self):
-        # Get the cleaned username value
         username = self.cleaned_data.get('username')
 
-        # Check if the username has at least 3 characters and no spaces
         if len(username) < 3 or ' ' in username:
             raise forms.ValidationError("Username must be at least 3 characters long and cannot contain spaces.")
 

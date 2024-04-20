@@ -1,7 +1,5 @@
-from django.urls import path, include
-
-from clothesDjango.likes_cart.models import UpdateCartItemView
-from clothesDjango.likes_cart.views import ViewLikes, ViewCart, like_toggle, delete_cart_item, add_to_cart
+from django.urls import path
+from clothesDjango.likes_cart.views import ViewLikes, ViewCart, like_toggle, delete_cart_item, add_to_cart, UpdateCartItemView
 
 urlpatterns = [
     path("like/<int:pk_cloth>/", like_toggle, name="like"),

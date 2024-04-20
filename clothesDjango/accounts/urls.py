@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from clothesDjango.accounts.views import RegisterUserView, LoginUserView, logout_user, \
-    ProfileEditView, ProfileDeleteView, ProfileDetailsView
+    ProfileEditView, ProfileDetailsView
 
 
 urlpatterns = [
@@ -11,7 +11,6 @@ urlpatterns = [
     path('my-profile/<int:pk>/', include([
         path('', ProfileDetailsView.as_view(), name='show user profile'),
         path('edit/', ProfileEditView.as_view(), name='edit user profile'),
-        # path('delete/', ProfileDeleteView.as_view(), name='delete user profile'),
         path('my-orders/', include('clothesDjango.orders.urls')),
         ]
     ))

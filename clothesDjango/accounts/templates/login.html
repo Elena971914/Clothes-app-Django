@@ -9,14 +9,17 @@
 <div class="login-register">
     <div class="login-box" style="{{ 'margin:50px' }}">
         <form method="post" action="{% url 'login' %}">
-            {{ form.username.errors }}
         {{ form.username|placeholder:'Username'|add_attribute:'autofocus, True' }}
-            {{ form.password.errors }}
         {{ form.password|placeholder:"Password" }}
         <input type="hidden" value="{{ next }}" name="next"/>
         {% csrf_token %}
         <button type="submit">Login</button>
         </form>
+        <ul>
+        {% for error in form.errors.values %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
     </div>
     <div class="register-box">
         <p>No registration yet? It would take a minute.</p>

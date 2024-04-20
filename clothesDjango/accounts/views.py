@@ -39,9 +39,8 @@ def logout_user(request):
     return redirect('index')
 
 
-#                        PROFILE VIEWS              PROFILE VIEWS
+# PROFILE VIEWS
 class ProfileDetailsView(views.DetailView):
-
     template_name = "profile-details.html"
     model = UserModel
 
@@ -62,17 +61,14 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('show user profile', kwargs={'pk': self.request.user.pk})
 
     def get_object(self, queryset=None):
-        # Return the current user instance
         return self.request.user
 
     def form_valid(self, form):
-        # Save the form data directly to the user instance
         user = form.save(commit=False)
         user.save()
         return super().form_valid(form)
 
     def get_initial(self):
-        # Get initial data for the form
         initial = super().get_initial()
         user = self.request.user
         initial['email'] = user.email
@@ -85,7 +81,6 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return initial
 
 
-class ProfileDeleteView(views.DeleteView):
-    # queryset = Profile.objects.all()
+class ProfileDeleteView(LoginRequiredMixin, views.DeleteView):
     template_name = "profile-delete.html"
 

@@ -12,14 +12,21 @@
             <form method="POST" action="{% url 'confirm order' %}">
                 {{ form.as_p }}
                 {% csrf_token %}
+                {% if total_price %}
                 <button type="submit">Submit order data</button>
+                {% endif %}
             </form>
         </div>
         <ul class='cart-list' style="{{ 'margin-top:80px' }}">
         <h1 class="text-center layout_padding2-top">Items</h1>
         <p class="text-center">Total price of the products:
             <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
-                {{ total_price }} BGN
+                {% if total_price %}
+                    {{ total_price }}
+                {% else %}
+                    0
+                {% endif %}
+                BGN
             </small>
         </p>
         {% for cart_item in request.user.cart_set.all %}

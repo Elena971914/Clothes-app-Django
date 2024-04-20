@@ -5,109 +5,113 @@
   Profile Details
 {% endblock %}
 
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/profile-details.css' %}">
+{% endblock %}
+
 {% block content %}
 
-    <div class="header">
-      {% if request.user.get_full_name %}
-        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
-      {% else %}
-        <h1 class="header-title">{{ request.user.username }}'s profile</h1>
-      {% endif %}
-    </div>
+<div class="header">
+  {% if request.user.get_full_name %}
+    <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+  {% else %}
+    <h1 class="header-title">{{ request.user.username }}'s profile</h1>
+  {% endif %}
+</div>
 
-    {% if orders %}
-    <section class="order-history">
-      <h2 class="order-history-title">Last order</h2>
-      <table class="order-history-table">
-        <thead>
-          <tr>
-            <th>Order №</th>
-            <th>Date of purchase</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for order in orders %}
-            <tr class="order-row">
-              <td>{{ order.pk }}</td>
-              <td>{{ order.date_of_purchase }}</td>
-              <td>{{ order.price }} BGN</td>
-              <td>{{ order.status }}</td>
-              <td><a href="{% url 'order details' pk=order.pk %}" class="order-details-link">Details</a></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <a href="#" class="view-all-orders-button">View All Orders</a>
-    </section>
+{% if orders %}
+<section class="order-history">
+  <h2 class="order-history-title">Last order</h2>
+  <table class="order-history-table">
+    <thead>
+      <tr>
+        <th>Order №</th>
+        <th>Date of purchase</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr class="order-row">
+          <td>{{ order.pk }}</td>
+          <td>{{ order.date_of_purchase }}</td>
+          <td>{{ order.price }} BGN</td>
+          <td>{{ order.status }}</td>
+          <td><a href="{% url 'order details' pk=order.pk %}" class="order-details-link">Details</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="#" class="view-all-orders-button">View All Orders</a>
+</section>
+{% endif %}
+
+<div class="separator"></div>
+
+<section class="profile-info">
+  <h2 class="profile-info-title">My data</h2>
+  <div class="profile">
+    <h3 class="shipping-address-title">Personal details</h3>
+    {% if request.user.first_name and request.user.last_name %}
+      <p class="shipping-address-info"><b>{{ request.user.first_name }} {{ request.user.last_name }}</b></p>
     {% endif %}
-
-    <div class="separator"></div>
-
-    <section class="profile-info">
-      <h2 class="profile-info-title">My data</h2>
-      <div class="profile">
-        <h3 class="shipping-address-title">Personal details</h3>
-        {% if request.user.first_name and request.user.last_name %}
-          <p class="shipping-address-info"><b>{{ request.user.first_name }} {{ request.user.last_name }}</b></p>
-        {% endif %}
-        {% if request.user.email %}
-          <p class="profile-email">Email: <b>{{ request.user.email }}</b></p>
-        {% endif %}
-        {% if request.user.phone_number %}
-          <p class="profile-phone">Phone: <b>{{ request.user.phone_number }}</b></p>
-        {% endif %}
-        {% if request.user.date_of_birth %}
-          <p class="profile-dob">Date of Birth: <b>{{ request.user.date_of_birth }}</b></p>
-        {% endif %}
-        <p class="profile-verification-status">Confirmed verification</p>
-        <a href="{% url 'edit user profile' pk=request.user.pk %}" class="profile-edit-link">Change the profile data</a>
-      </div>
+    {% if request.user.email %}
+      <p class="profile-email">Email: <b>{{ request.user.email }}</b></p>
+    {% endif %}
+    {% if request.user.phone_number %}
+      <p class="profile-phone">Phone: <b>{{ request.user.phone_number }}</b></p>
+    {% endif %}
+    {% if request.user.date_of_birth %}
+      <p class="profile-dob">Date of Birth: <b>{{ request.user.date_of_birth }}</b></p>
+    {% endif %}
+    <p class="profile-verification-status">Confirmed verification</p>
+    <a href="{% url 'edit user profile' pk=request.user.pk %}" class="profile-edit-link">Change the profile data</a>
+  </div>
+  {% if request.user.address %}
+    <div class="shipping-address">
+      <h3 class="shipping-address-title">Delivery address</h3>
       {% if request.user.address %}
-        <div class="shipping-address">
-          <h3 class="shipping-address-title">Delivery address</h3>
-          {% if request.user.address %}
-            <p class="shipping-address-info">Address: <b>{{ request.user.address }}</b></p>
-          {% endif %}
-          {% if request.user.city %}
-            <p class="shipping-address-info">City: <b>{{ request.user.city }}</b></p>
-          {% endif %}
-          {% if request.user.postal_code %}
-            <p class="shipping-address-info">Postal code: <b>{{ request.user.postal_code }}</b></p>
-          {% endif %}
-          <p class="shipping-address-info">Country: <b>Bulgaria</b></p>
-        </div>
+        <p class="shipping-address-info">Address: <b>{{ request.user.address }}</b></p>
       {% endif %}
-    </section>
+      {% if request.user.city %}
+        <p class="shipping-address-info">City: <b>{{ request.user.city }}</b></p>
+      {% endif %}
+      {% if request.user.postal_code %}
+        <p class="shipping-address-info">Postal code: <b>{{ request.user.postal_code }}</b></p>
+      {% endif %}
+      <p class="shipping-address-info">Country: <b>Bulgaria</b></p>
+    </div>
+  {% endif %}
+</section>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const viewAllOrdersButton = document.querySelector('.view-all-orders-button');
-        const orderRows = document.querySelectorAll('.order-row');
-        let allOrdersShown = false;
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const viewAllOrdersButton = document.querySelector('.view-all-orders-button');
+    const orderRows = document.querySelectorAll('.order-row');
+    let allOrdersShown = false;
 
-        for (let i = 1; i < orderRows.length; i++) {
+    for (let i = 1; i < orderRows.length; i++) {
+      orderRows[i].style.display = 'none';
+    }
+
+    viewAllOrdersButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (allOrdersShown) {
+        for (let i = 0; i < orderRows.length - 1; i++) {
           orderRows[i].style.display = 'none';
         }
-
-        viewAllOrdersButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          if (allOrdersShown) {
-            for (let i = 0; i < orderRows.length - 1; i++) {
-              orderRows[i].style.display = 'none';
-            }
-            viewAllOrdersButton.textContent = 'View All Orders';
-          } else {
-            orderRows.forEach(function (row) {
-              row.style.display = 'table-row';
-            });
-            viewAllOrdersButton.textContent = 'Show Only Last Order';
-          }
-          allOrdersShown = !allOrdersShown;
+        viewAllOrdersButton.textContent = 'View All Orders';
+      } else {
+        orderRows.forEach(function (row) {
+          row.style.display = 'table-row';
         });
-      });
-    </script>
+        viewAllOrdersButton.textContent = 'Show Only Last Order';
+      }
+      allOrdersShown = !allOrdersShown;
+    });
+  });
+</script>
 
 {% endblock %}
