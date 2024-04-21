@@ -73,6 +73,9 @@ class MyUser(auth_models.AbstractUser):
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
 
+    def __str__(self):
+        return self.email
+
 
 class AdminUser(MyUser):
     class Meta:

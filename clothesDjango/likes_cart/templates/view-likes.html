@@ -15,7 +15,7 @@
                 <div class="box" style="height:336px">
                     <a href="{% url 'show product details' cart_item.cloth.pk %}" id="current-{{ cart_item.cloth.id }}">
                         <div class="img-box" style="{{ 'max-height:275px; padding:0px' }}">
-                            <img src="{{ cart_item.cloth.photo.url }}" alt="" style="{{ 'max-height:100%' }}">
+                            <img src="{{ cart_item.cloth.photo.url }}" alt="" style="max-height:100%">
                         </div>
                         <div class="detail-box">
                             <h6>{{ cart_item.cloth.name }}</h6>

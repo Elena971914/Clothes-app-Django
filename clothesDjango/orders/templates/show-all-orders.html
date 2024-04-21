@@ -21,7 +21,7 @@
     <table class="order-history-table">
     <thead>
       <tr>
-          <th>User email</th>
+        <th>User email</th>
         <th>Order №</th>
         <th>Date of purchase</th>
         <th>Price</th>
@@ -32,7 +32,7 @@
     <tbody>
       {% for order in orders %}
         <tr class="order-row">
-            <td>{{ order.user.email }}</td>
+          <td>{{ order.user.email }}</td>
           <td>{{ order.pk }}</td>
           <td>{{ order.date_of_purchase }}</td>
           <td>{{ order.price }} BGN</td>
@@ -43,5 +43,7 @@
     </tbody>
   </table>
 </section>
+    {% else %}
+    <h3 class="layout_padding2-top">No orders</h3>
 {% endif %}
 {% endblock %}

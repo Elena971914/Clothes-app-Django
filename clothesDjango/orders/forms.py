@@ -11,7 +11,6 @@ class OrderForm(forms.Form):
     first_name = forms.CharField(
         max_length=30,
         validators=[validate_letters_and_dashes],
-        error_messages={'invalid': 'Please enter a valid phone number.'},
         widget=forms.TextInput(
             attrs={'placeholder': 'First name of receiver'})
     )
@@ -45,7 +44,8 @@ class OrderForm(forms.Form):
         max_length=100,
         validators=[validate_numbers_only],
         widget=forms.TextInput(
-            attrs={'placeholder': 'Postal code'})
+            attrs={'placeholder': 'Postal code'}),
+        required=False
     )
     payment_method = forms.ChoiceField(
         choices=PAYMENT_METHOD_CHOICES,
@@ -82,16 +82,6 @@ class OrderForm(forms.Form):
             self.initial['city'] = user.city
         if user.postal_code:
             self.initial['postal_code'] = user.postal_code
-
-    def clean(self):
-        cleaned_data = super().clean()
-        is_personal_address = cleaned_data.get('is_personal_address')
-        delivery_address = cleaned_data.get('delivery_address')
-
-        if not is_personal_address and not delivery_address:
-            raise forms.ValidationError("Please provide a delivery address.")
-
-        return cleaned_data
 
     def save(self):
         order = Order(

@@ -22,7 +22,7 @@
         <ul class='cart-list cart-summary' style="margin-top:80px; text-align:left">
             <h1 class="text-center layout_padding2-top">Items</h1>
             <p class="text-center">Total price of the products:
-                <small style="{{ 'color: #db4f66; font-weight: bold; font-size: 36px;' }}">
+                <small style="color: #db4f66; font-weight: bold; font-size: 36px;">
                     {% if total_price %}
                         {{ total_price }}
                     {% else %}
@@ -32,8 +32,8 @@
                 </small>
             </p>
             {% for cart_item in request.user.cart_set.all %}
-                <li class="cart-item" style="">
-                    <img src="{{ cart_item.cloth.photo.url }}" alt="Testimonial Photo" class="cart-img" style="{{ 'height:20vh' }}">
+                <li class="cart-item">
+                    <img src="{{ cart_item.cloth.photo.url }}" alt="Cloth Photo" class="cart-img" style="height:20vh">
                     <div class="cart-info">
                         <h6>{{ cart_item.cloth.name }}</h6>
                         <p>Price for piece: {{ cart_item.cloth.price }} BGN</p>
@@ -41,7 +41,9 @@
                         <p>Color: {{ cart_item.cloth.color }}</p>
                         <p>Quantity: {{ cart_item.quantity }}</p>
                     </div>
-                    <p style="{{ 'position:relative; top:6vh; left:8vw' }} ">Price: <small style="{{ 'color: #db4f66; font-weight: bold; font-size: larger;' }}">{{ cart_item.subtotal }} BGN</small></p>
+                    <p style="position:relative; top:6vh; left:8vw">Price:
+                        <small style="color: #db4f66; font-weight: bold; font-size: larger;">{{ cart_item.subtotal }} BGN</small>
+                    </p>
                 </li>
             {% endfor %}
         <button class="order-buttons"><a href="{% url 'view cart' %}" style="color:white">Return to cart</a></button>

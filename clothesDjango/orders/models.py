@@ -18,35 +18,54 @@ class Order(models.Model):
         ('CARD', 'Card payment'),
         ('CASH', 'Cash on delivery'),
     )
-
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=14, validators=[validate_phone_number])
-    date_of_purchase = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Process')
-    delivery_address = models.CharField(max_length=100)
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
+    )
+    phone = models.CharField(
+        max_length=14,
+        validators=[validate_phone_number]
+    )
+    date_of_purchase = models.DateTimeField(
+        default=timezone.now
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='In Process'
+    )
+    delivery_address = models.CharField(
+        max_length=100
+    )
     city = models.CharField(
         max_length=100,
         blank=True,
-        null=True)
+        null=True
+    )
     postal_code = models.CharField(
         max_length=100,
         blank=True,
-        null=True)
-    is_personal_address = models.BooleanField(default=True)
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='CASH')
-    comment = models.TextField()
-    agreed_to_terms = models.BooleanField(default=False)
+        null=True
+    )
+    is_personal_address = models.BooleanField(
+        default=True
+    )
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        default='CASH'
+    )
+    comment = models.TextField(
+        null=True,
+        blank=True
+    )
+    agreed_to_terms = models.BooleanField(
+        default=False
+    )
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
     )
-
-    def save(self, *args, **kwargs):
-        if (timezone.now() - self.date_of_purchase).days > 3:
-            self.status = 'Sent'
-        else:
-            self.status = 'In Process'
-        super().save(*args, **kwargs)
 
 
 class CopiedCart(models.Model):

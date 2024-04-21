@@ -5,10 +5,10 @@ from clothesDjango.likes_cart.models import Likes, Cart
 
 @admin.register(Likes)
 class LikesAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['cloth', 'user']
 
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['cloth', 'user', 'size', 'quantity']
 

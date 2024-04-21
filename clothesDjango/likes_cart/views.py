@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Sum, F
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views import View
 from django.views.generic import ListView
