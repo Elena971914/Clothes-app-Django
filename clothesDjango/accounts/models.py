@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 
 from clothesDjango.accounts.validators import validate_before_today, validate_age, validate_letters_and_dashes, \
-    validate_phone_number, validate_no_spaces
+    validate_phone_number, validate_no_spaces, validate_numbers_only
 
 
 class MyUser(auth_models.AbstractUser):
@@ -52,6 +52,7 @@ class MyUser(auth_models.AbstractUser):
         null=True)
     postal_code = models.CharField(
         max_length=100,
+        validators=[validate_numbers_only],
         blank=True,
         null=True)
     user_permissions = models.ManyToManyField(

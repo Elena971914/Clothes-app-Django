@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="login-register">
-    <div class="login-box" style="{{ 'margin:50px' }}">
+    <div class="login-box" style="margin:50px">
         <form method="post" action="{% url 'login' %}">
         {{ form.username|placeholder:'Username'|add_attribute:'autofocus, True' }}
         {{ form.password|placeholder:"Password" }}

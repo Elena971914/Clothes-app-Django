@@ -1,13 +1,10 @@
-from django.conf.urls.static import static
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import request
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, logout, login, get_user_model
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import CreateView, UpdateView
 from clothesDjango.accounts.forms import RegisterUserForm, ProfileEditForm
-from clothesDjango.accounts.models import Profile
 from clothesDjango.orders.models import Order
 
 UserModel = get_user_model()
@@ -63,11 +60,6 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.save()
-        return super().form_valid(form)
-
     def get_initial(self):
         initial = super().get_initial()
         user = self.request.user
@@ -80,7 +72,4 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         initial['address'] = user.address
         return initial
 
-
-class ProfileDeleteView(LoginRequiredMixin, views.DeleteView):
-    template_name = "profile-delete.html"
 

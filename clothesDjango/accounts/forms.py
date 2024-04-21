@@ -11,17 +11,10 @@ class RegisterUserForm(auth_forms.UserCreationForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-
-        if len(username) < 3 or ' ' in username:
-            raise forms.ValidationError("Username must be at least 3 characters long and cannot contain spaces.")
-
-        return username
 
     class Meta:
         model = UserModel
-        fields = ['email', 'username', 'first_name', 'last_name',
+        fields = ['first_name', 'last_name',
                   'date_of_birth', 'phone_number', 'address', 'city', 'postal_code']
 
         widgets = {

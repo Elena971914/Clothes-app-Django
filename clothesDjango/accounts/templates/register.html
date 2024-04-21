@@ -2,11 +2,11 @@
 {% load static %}
 {% load account_tags %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
     <div class="login-register">
-        <div class="login-box" style="{{ 'margin:50px' }}">
+        <div class="login-box" style="margin:50px">
             <form method="post" action="{% url 'register' %}">
                 {{ form.username.errors }}
                 {{ form.username|placeholder:'Username' }}
@@ -24,7 +24,7 @@
         </div>
         <div class="register-box">
             <p>You already have registration?</p>
-            <button><a href="{% url 'login' %}" style="{{ 'color:white' }}">Sign in</a></button>
+            <button><a href="{% url 'login' %}" style="color:white">Sign in</a></button>
         </div>
     </div>
 {% endblock %}

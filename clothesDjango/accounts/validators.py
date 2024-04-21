@@ -30,7 +30,7 @@ def validate_phone_number(value):
     regex = r'^(0|\+359)\d{9}$'
     if not value or not bool(re.match(regex, value)):
         raise ValidationError('Invalid phone number format. Phone number should start with 0 or +359 '
-                              'and be exactly 10 digits long.')
+                              'and have exactly 9 digits after.')
 
 
 def validate_numbers_only(value):
