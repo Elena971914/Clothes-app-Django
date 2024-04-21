@@ -1,10 +1,9 @@
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 from clothesDjango.catalogue.forms import SearchForm, AddClothForm, UpdateClothForm
@@ -44,30 +43,27 @@ def show_shop(request):
 
 
 def show_product_details(request, pk):
-    try:
-        cloth = get_object_or_404(Cloth, pk=pk)
+    cloth = get_object_or_404(Cloth, pk=pk)
 
-        previously_viewed = request.session.get('previously_viewed', [])
-        if cloth.pk in previously_viewed:
-            previously_viewed.remove(cloth.pk)
-        previously_viewed.append(cloth.pk)
+    previously_viewed = request.session.get('previously_viewed', [])
+    if cloth.pk in previously_viewed:
+        previously_viewed.remove(cloth.pk)
+    previously_viewed.append(cloth.pk)
 
-        if len(previously_viewed) < 4:
-            previously_viewed_slice = previously_viewed[:-1]
-        else:
-            previously_viewed_slice = previously_viewed[-4:-1]
+    if len(previously_viewed) < 4:
+        previously_viewed_slice = previously_viewed[:-1]
+    else:
+        previously_viewed_slice = previously_viewed[-4:-1]
 
-        previously_viewed_clothes = Cloth.objects.filter(pk__in=previously_viewed_slice)
-        request.session['previously_viewed'] = previously_viewed
+    previously_viewed_clothes = Cloth.objects.filter(pk__in=previously_viewed_slice)
+    request.session['previously_viewed'] = previously_viewed
 
-        context = {
-            'cloth': cloth,
-            'previously_viewed_clothes': previously_viewed_clothes,
-        }
+    context = {
+        'cloth': cloth,
+        'previously_viewed_clothes': previously_viewed_clothes,
+    }
 
-        return render(request, 'product-details.html', context)
-    except Exception as e:
-        return render(request, '404.html', {'error_message': 'An error occurred. Please try again later.'})
+    return render(request, 'product-details.html', context)
 
 
 class AddCloth(LoginRequiredMixin, CreateView):

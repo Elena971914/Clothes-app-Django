@@ -20,6 +20,11 @@ class AddClothForm(forms.ModelForm):
         model = Cloth
         exclude = ('size',)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['color'].widget = forms.TextInput(attrs={'placeholder': 'Write all colors separated by space'})
+        self.fields['material'].widget = forms.TextInput(attrs={'placeholder': 'Write all contained materials separated by space'})
+
 
 class UpdateClothForm(forms.ModelForm):
     class Meta:

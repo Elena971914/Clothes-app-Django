@@ -11,4 +11,4 @@ class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testimonial
         exclude = ('user',)
-        labels = {'text': 'Tell us your opinion. It matters!',}
+        labels = {'text': 'Tell us your opinion. It matters!'}

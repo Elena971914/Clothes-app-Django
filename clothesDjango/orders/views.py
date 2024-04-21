@@ -7,6 +7,7 @@ from django.views.generic import DetailView, DeleteView, FormView
 from django.shortcuts import render
 
 from clothesDjango.likes_cart.models import Cart
+from clothesDjango.orders.decorators import staff_group_required
 from clothesDjango.orders.forms import OrderForm
 from clothesDjango.orders.models import Order, CopiedCart
 
@@ -105,7 +106,7 @@ class ConfirmOrder(LoginRequiredMixin, View):
             return render(request, 'order-create.html', context)
 
 
-@login_required
+@staff_group_required
 def show_all_orders(request):
     orders = Order.objects.all()
     context = {

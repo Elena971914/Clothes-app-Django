@@ -71,11 +71,14 @@
             </div>
 
             {% empty %}
-                <button class="cart-order-button">
-                    <a href="{% url 'shop' %}" style="{{ 'color:white' }}" id="current-{{ cart_item.cloth.id }}">
-                        View catalogue
-                    </a>
-                </button>
+                <div class="layout_padding2-top">
+                    <h3>You haven't added any item to favourites yet...</h3>
+                    <button class="cart-order-button">
+                        <a href="{% url 'shop' %}" style="color:white" id="current-{{ cart_item.cloth.id }}">
+                            View catalogue
+                        </a>
+                    </button>
+                </div>
             {% endfor %}
         </div>
     </div>

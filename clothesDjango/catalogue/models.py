@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import Model
 from django.utils import timezone
 
-from clothesDjango.catalogue.validators import image_size_validator
+from clothesDjango.catalogue.validators import image_size_validator, validate_letters_and_spaces
 
 UserModel = get_user_model()
 
@@ -30,23 +30,37 @@ class Cloth(models.Model):
 
     type = models.CharField(
         max_length=50,
-        choices=CATEGORY_CHOICES
+        choices=CATEGORY_CHOICES,
+        null=False,
+        blank=False
     )
     name = models.CharField(
-        max_length=100
+        max_length=100,
+        validators=[validate_letters_and_spaces],
+        null=False,
+        blank=False
     )
     description = models.TextField(
         null=True,
-        blank=True
+        blank=True,
+        validators=[validate_letters_and_spaces]
     )
     price = models.IntegerField(
+        null=False,
+        blank=False
     )
     color = models.CharField(
-        max_length=20
+        max_length=20,
+        validators=[validate_letters_and_spaces],
+        null=False,
+        blank=False
     )
     material = models.CharField(
         max_length=50,
-        null=True
+        validators=[validate_letters_and_spaces],
+        default='mixture of bio materials',
+        null=False,
+        blank=False,
     )
     size = models.CharField(
         max_length=100,
