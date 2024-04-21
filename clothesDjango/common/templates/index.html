@@ -217,18 +217,20 @@
                         <img src="{{ testimonial.photo.url }}" alt="Testimonial Photo" style="display: inline-block; max-width:60vw; max-height: 30vh">
                     {% endif %}
                 </div>
-                <div class="buttons-position" style="{{ 'text-align:center' }}">
-                    <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
-                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
-                            <i class="fa fa-edit"></i> Edit
-                        </button>
-                    </a>
-                    <a href="{% url 'delete testimonial' testimonial.pk %}" class="button-link" title="Delete">
-                        <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
-                            <i class="fa fa-trash"></i> Delete
-                        </button>
-                    </a>
-                </div>
+                {% if request.user == testimonial.user %}
+                        <div class="buttons-position" style="text-align:center">
+                            <a href="{% url 'edit testimonial' testimonial.pk %}" class="button-link" title="Edit">
+                                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                                    <i class="fa fa-edit"></i> Edit
+                                </button>
+                            </a>
+                            <a href="{% url 'delete testimonial' testimonial.pk %}" class="button-link" title="Delete">
+                                <button type="button" style="color: #db4f66; transition: all 0.3s ease; border: 2px solid #db4f66; background-color: white; border-radius: 20px; padding: 12px 24px; margin: 10px;" onmouseover="this.style.backgroundColor='#db4f66'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#db4f66';">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </a>
+                        </div>
+                        {% endif %}
             </div>
       {% empty %}
         <p class="text-center layout_padding2">There are no testimonials yet. Be the first to add one.</p>
